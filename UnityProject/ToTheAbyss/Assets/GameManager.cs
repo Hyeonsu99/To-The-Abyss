@@ -6,23 +6,48 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance = null;
+
     public int Coin;
+
+    public int CoinM;
 
     public TextMeshProUGUI CoinText;
 
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
 
+    private void Awake()
+    {
+        if(null == instance)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if(instance == null)
+            {
+                return null;
+            }
+
+            return instance;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Method());
-    }
+        CoinM = 1;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(Method());
     }
 
     IEnumerator Method()
@@ -43,15 +68,20 @@ public class GameManager : MonoBehaviour
     {
         if(pause)
         {
-            _backGroundTime = DateTime.Now;
+            //_backGroundTime = DateTime.Now;
         }
         else
         {
-            _foreGroundTime = DateTime.Now;
+            //_foreGroundTime = DateTime.Now;
 
-            var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
+            //var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
 
-            Coin += (int)sec;
+            //Coin += (int)sec;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+
     }
 }
