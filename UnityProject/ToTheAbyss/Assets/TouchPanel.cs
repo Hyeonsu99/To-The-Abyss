@@ -10,13 +10,15 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         if(Input.touchCount > 0)
         {
-            GameManager.Instance.Coin += GameManager.Instance.CoinM;
+            GameManager.Instance.coin += GameManager.Instance.touchGold;
+
+            GameManager.Instance.isTouch = true;
         }
     }   
 
     public void OnPointerUp(PointerEventData eventData)
     {
-       
+        GameManager.Instance.isTouch = false;
     }
 
     // Start is called before the first frame update

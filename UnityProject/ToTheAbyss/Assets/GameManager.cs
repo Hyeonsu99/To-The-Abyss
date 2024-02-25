@@ -8,11 +8,16 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
 
-    public int Coin;
+    public int coin;
 
-    public int CoinM;
+    public int touchGold;
+    public int autoGold;
+
+    public float playerDamage;
 
     public TextMeshProUGUI CoinText;
+
+    public bool isTouch;
 
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
@@ -45,7 +50,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CoinM = 1;
+        SetGame();
 
         StartCoroutine(Method());
     }
@@ -58,10 +63,16 @@ public class GameManager : MonoBehaviour
         {
             yield return cointime;
 
-            Coin++;
+            coin += autoGold;
 
-            CoinText.text = Coin.ToString();
+            CoinText.text = coin.ToString();
         }
+    }
+
+    private void SetGame()
+    {
+        touchGold = 1;
+        autoGold = 1;
     }
 
     private void OnApplicationPause(bool pause)
