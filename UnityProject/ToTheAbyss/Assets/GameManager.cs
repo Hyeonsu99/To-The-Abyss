@@ -63,9 +63,7 @@ public class GameManager : MonoBehaviour
         {
             yield return cointime;
 
-            coin += autoGold;
-
-            CoinText.text = coin.ToString();
+            coin += autoGold;           
         }
     }
 
@@ -73,6 +71,11 @@ public class GameManager : MonoBehaviour
     {
         touchGold = 1;
         autoGold = 1;
+    }
+
+    private void Update()
+    {
+        CoinText.text = coin.ToString();
     }
 
     private void OnApplicationPause(bool pause)
