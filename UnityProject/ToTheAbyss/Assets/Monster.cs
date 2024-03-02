@@ -16,7 +16,7 @@ public class Monster : MonoBehaviour
 
         if(monsterSpawner != null)
         {
-            if(monsterSpawner.Count <= 1)
+            if(monsterSpawner.Count <= 0)
             {
                 Health = 100;
             }

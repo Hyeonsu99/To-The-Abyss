@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public int playerAutoDamage;
 
     public TextMeshProUGUI CoinText;
+    public TextMeshProUGUI StageText;
 
     public MonsterSpawner monsterSpawner;
 
@@ -100,6 +101,8 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         CoinText.text = coin.ToString();
+
+        StageText.text = $"Stage : {monsterSpawner.Count + 1}";
     }
 
     private void OnApplicationPause(bool pause)
