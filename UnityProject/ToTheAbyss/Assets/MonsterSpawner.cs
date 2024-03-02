@@ -6,7 +6,7 @@ public class MonsterSpawner : MonoBehaviour
 {
     public GameObject monsterPrefab;
 
-    private GameObject currentMonster;
+    public GameObject currentMonster;
 
     public int Count;
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class MonsterSpawner : MonoBehaviour
     {
         if (!PlayerPrefs.HasKey("Count"))
         {
-            Count = 1;
+            Count = 0;
         }
         else
         {

@@ -9,7 +9,6 @@ public class Monster : MonoBehaviour
 
     public UnityAction OnDeath;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +25,25 @@ public class Monster : MonoBehaviour
                 Health = 100 + (int)(100 * monsterSpawner.Count * 0.1f);
             }
         }
+    }
+
+    public void TakeDamage(int Damage)
+    {
+        Health -= Damage;
+
+        if(Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        if(OnDeath != null)
+        {
+            OnDeath.Invoke();
+        }
+
+        Destroy(gameObject);
     }
 }

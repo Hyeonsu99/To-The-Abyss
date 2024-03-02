@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     public int touchGold;
     public int autoGold;
 
-    public float playerDamage;
+    public int playerDamage;
 
     public TextMeshProUGUI CoinText;
 
-    public bool isTouch;
+    public MonsterSpawner monsterSpawner;
 
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
@@ -69,8 +69,25 @@ public class GameManager : MonoBehaviour
 
     private void SetGame()
     {
-        touchGold = 1;
-        autoGold = 1;
+        if(!PlayerPrefs.HasKey("autoGold") || !PlayerPrefs.HasKey("touchGold"))
+        {
+            touchGold = 1;
+            autoGold = 1;
+        }
+        else
+        {
+            touchGold = PlayerPrefs.GetInt("touchGold");
+            autoGold = PlayerPrefs.GetInt("autoGold");
+        }
+
+        if(!PlayerPrefs.HasKey("playerDamage"))
+        {
+            playerDamage = 10;
+        }
+        else
+        {
+            playerDamage = PlayerPrefs.GetInt("playerDamage");
+        }
     }
 
     private void Update()
