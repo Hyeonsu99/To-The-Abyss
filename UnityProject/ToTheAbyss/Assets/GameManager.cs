@@ -14,10 +14,13 @@ public class GameManager : MonoBehaviour
     public int autoGold;
 
     public int playerDamage;
+    public int playerAutoDamage;
 
     public TextMeshProUGUI CoinText;
 
     public MonsterSpawner monsterSpawner;
+
+    public float delay;
 
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
@@ -88,6 +91,10 @@ public class GameManager : MonoBehaviour
         {
             playerDamage = PlayerPrefs.GetInt("playerDamage");
         }
+
+        playerAutoDamage = 5;
+
+        delay = 1;
     }
 
     private void Update()
