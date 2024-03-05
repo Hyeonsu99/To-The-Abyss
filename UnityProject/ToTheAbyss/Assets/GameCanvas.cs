@@ -1,18 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameCanvas : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void ClearAllData()
     {
-        
+        PlayerPrefs.DeleteAll();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClick(GameObject obj)
     {
-        
+        if (obj != null && obj.activeSelf == false)
+        {
+            obj.SetActive(true);
+        }
+    }
+
+    public void LoadMiniGameScene()
+    {
+        SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
     }
 }

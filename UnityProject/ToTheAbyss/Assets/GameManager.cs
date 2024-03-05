@@ -73,6 +73,15 @@ public class GameManager : MonoBehaviour
 
     private void SetGame()
     {
+        if(PlayerPrefs.HasKey("coin"))
+        {
+            coin = PlayerPrefs.GetInt("coin");
+        }
+        else
+        {
+            coin = 0;
+        }
+
         if(!PlayerPrefs.HasKey("autoGold") || !PlayerPrefs.HasKey("touchGold"))
         {
             touchGold = 1;
@@ -93,9 +102,21 @@ public class GameManager : MonoBehaviour
             playerDamage = PlayerPrefs.GetInt("playerDamage");
         }
 
-        playerAutoDamage = 5;
+        if (!PlayerPrefs.HasKey("playerAutoDamage"))
+        {
+            playerAutoDamage = 5;
+        }
+        else
+        {
+            playerAutoDamage = PlayerPrefs.GetInt("playerDamage");
+        }
 
         delay = 1;
+    }
+
+    private void ActivePeer(int index)
+    {
+
     }
 
     private void Update()
@@ -123,6 +144,16 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
+        SaveGame();
+    }
 
+    private void SaveGame()
+    {
+        PlayerPrefs.SetInt("coin", coin);
+
+        PlayerPrefs.SetInt("playerDamage", playerDamage);
+        PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);
+
+        PlayerPrefs.SetInt("count", monsterSpawner.Count);
     }
 }

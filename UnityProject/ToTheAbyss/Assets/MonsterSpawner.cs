@@ -12,13 +12,13 @@ public class MonsterSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!PlayerPrefs.HasKey("Count"))
+        if (!PlayerPrefs.HasKey("count"))
         {
             Count = 0;
         }
         else
         {
-            Count = PlayerPrefs.GetInt("Count");
+            Count = PlayerPrefs.GetInt("count");
         }
 
         SpawnMonster();
