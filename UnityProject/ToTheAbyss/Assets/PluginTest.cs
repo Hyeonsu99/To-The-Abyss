@@ -6,22 +6,20 @@ using UnityEngine.UI;
 public class PluginTest : MonoBehaviour
 {
     public Text text;
+    public Text text2;
+
+    AndroidJavaObject obj;
+    AndroidJavaObject obj2;
 
     // Start is called before the first frame update
     void Start()
     {
         var pluginClass = new AndroidJavaClass("com.example.plugin.UnityPlugin");
 
-        var instance = pluginClass.CallStatic<AndroidJavaObject>("instance");
+        obj = pluginClass.CallStatic<AndroidJavaObject>("instance");
 
-        var str = instance.Call<string>("returnText");
+        var str = obj.Call<string>("returnText");
 
         text.text = str;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
