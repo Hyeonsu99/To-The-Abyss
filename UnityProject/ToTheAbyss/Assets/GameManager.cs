@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
 
+
     private void Awake()
     {
         if(null == instance)
@@ -112,11 +113,6 @@ public class GameManager : MonoBehaviour
         }
 
         delay = 1;
-    }
-
-    private void ActivePeer(int index)
-    {
-
     }
 
     private void Update()

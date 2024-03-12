@@ -42,10 +42,4 @@ public class MonsterSpawner : MonoBehaviour
 
         SpawnMonster();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
