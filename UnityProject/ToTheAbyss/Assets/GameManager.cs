@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
 
-
     private void Awake()
     {
         if(null == instance)

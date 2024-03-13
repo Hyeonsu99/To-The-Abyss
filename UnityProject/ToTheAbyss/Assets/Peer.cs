@@ -60,11 +60,4 @@ public class Peer : MonoBehaviour
         var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
         monster.TakeDamage(damage);
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
