@@ -88,6 +88,46 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
+    public void UpgradePeer(GameObject obj)
+    {
+        var peer = obj.GetComponent<Peer>();
+
+        if(obj.activeSelf)
+        {
+            switch (EventSystem.current.currentSelectedGameObject.name)
+            {
+                case "1":
+                    if (GameManager.Instance.coin > 10)
+                    {
+                        GameManager.Instance.coin -= 10;
+                        peer.damage += 1;
+                    }
+                    break;
+                case "2":
+                    if (GameManager.Instance.coin > 20)
+                    {
+                        GameManager.Instance.coin -= 20;
+                        peer.damage += 2;
+                    }
+                    break;
+                case "3":
+                    if (GameManager.Instance.coin > 40)
+                    {
+                        GameManager.Instance.coin -= 40;
+                        peer.damage += 4;
+                    }
+                    break;
+                case "4":
+                    if (GameManager.Instance.coin > 80)
+                    {
+                        GameManager.Instance.coin -= 80;
+                        peer.damage += 8;
+                    }
+                    break;
+            }
+        }
+    }
+
     public void LoadMiniGameScene()
     {
         SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);

@@ -15,8 +15,29 @@ public class Peer : MonoBehaviour
 
     public PeerType type = PeerType.None;
     // Start is called before the first frame update
+
+    public int damage;
+
     void Start()
     {
+        switch (type)
+        {
+            case PeerType.One:
+                damage = 1;
+                break;
+            case PeerType.Two:
+                damage = 2;
+                break;
+            case PeerType.Three:
+                damage = 4;
+                break;
+            case PeerType.Four:
+                damage = 8;
+                break;
+            default:
+                break;
+        }
+
         StartCoroutine(AutoDamage());
     }
 
@@ -33,19 +54,19 @@ public class Peer : MonoBehaviour
                 switch (type)
                 {
                     case PeerType.One:
-                        Damage(1);
+                        Damage(damage);
                         yield return new WaitForSeconds(1f);
                         break;
                     case PeerType.Two:
-                        Damage(2);
+                        Damage(damage);
                         yield return new WaitForSeconds(2f);
                         break;
                     case PeerType.Three:
-                        Damage(4);
+                        Damage(damage);
                         yield return new WaitForSeconds(3f);
                         break;
                     case PeerType.Four:
-                        Damage(8);
+                        Damage(damage);
                         yield return new WaitForSeconds(4f);
                         break;
                     default:
