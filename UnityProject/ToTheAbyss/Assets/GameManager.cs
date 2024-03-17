@@ -150,7 +150,6 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Peer_" + i, peers[i].activeSelf ? 1 : 0);
         }
 
-
         PlayerPrefs.SetInt("coin", coin);
         PlayerPrefs.SetInt("playerDamage", playerDamage);
         PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);

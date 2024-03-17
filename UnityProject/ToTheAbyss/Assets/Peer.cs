@@ -16,37 +16,46 @@ public class Peer : MonoBehaviour
     public PeerType type = PeerType.None;
     // Start is called before the first frame update
 
+    public int Level;
+
     public int damage;
 
+
     void Start()
+    {
+        Level = 1;
+
+        SetDamage();
+
+        StartCoroutine(AutoDamage());
+    }
+
+    public void SetDamage()
     {
         switch (type)
         {
             case PeerType.One:
-                damage = 1;
+                damage = Level * 1;
                 break;
             case PeerType.Two:
-                damage = 2;
+                damage = Level * 2;
                 break;
             case PeerType.Three:
-                damage = 4;
+                damage = Level * 4;
                 break;
             case PeerType.Four:
-                damage = 8;
+                damage = Level * 8;
                 break;
             default:
                 break;
         }
-
-        StartCoroutine(AutoDamage());
     }
 
     IEnumerator AutoDamage()
     {
         yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
 
-        var a = new WaitForSeconds(GameManager.Instance.delay);
-
+        var a = new WaitForSeconds(GameManager.Instance.delay);      
         if(this.gameObject.activeSelf)
         {
             while (true)
