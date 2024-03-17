@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private DateTime _backGroundTime;
     private DateTime _foreGroundTime;
 
+    [SerializeField]
+    private List<GameObject> peers = new List<GameObject>();
+
     private void Awake()
     {
         if(null == instance)
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetGame();
+        LoadGameState();
 
         StartCoroutine(Method());
     }
@@ -71,7 +74,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SetGame()
+    private void LoadGameState()
     {
         if(PlayerPrefs.HasKey("coin"))
         {
@@ -100,6 +103,14 @@ public class GameManager : MonoBehaviour
             playerAutoDamage = PlayerPrefs.GetInt("playerDamage");
         }
 
+        for(int i = 0; i < peers.Count; i++)
+        {
+            int state = PlayerPrefs.GetInt("Peer_" + i, 0);
+
+            peers[i].SetActive(state == 1);
+        }
+
+        // µ· ¿À¸£´Â µô·¹ÀÌ
         delay = 1;
     }
 
@@ -129,16 +140,22 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        SaveGameState();
     }
 
-    private void SaveGame()
+    private void SaveGameState()
     {
-        PlayerPrefs.SetInt("coin", coin);
+        for(int i = 0; i < peers.Count; i++)
+        {
+            PlayerPrefs.SetInt("Peer_" + i, peers[i].activeSelf ? 1 : 0);
+        }
 
+
+        PlayerPrefs.SetInt("coin", coin);
         PlayerPrefs.SetInt("playerDamage", playerDamage);
         PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);
-
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
+
+        PlayerPrefs.Save();
     }
 }
