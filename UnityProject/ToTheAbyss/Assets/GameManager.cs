@@ -82,17 +82,6 @@ public class GameManager : MonoBehaviour
             coin = 0;
         }
 
-        if(!PlayerPrefs.HasKey("autoGold") || !PlayerPrefs.HasKey("touchGold"))
-        {
-            touchGold = 1;
-            autoGold = 1;
-        }
-        else
-        {
-            touchGold = PlayerPrefs.GetInt("touchGold");
-            autoGold = PlayerPrefs.GetInt("autoGold");
-        }
-
         if(!PlayerPrefs.HasKey("playerDamage"))
         {
             playerDamage = 10;
@@ -121,19 +110,20 @@ public class GameManager : MonoBehaviour
         StageText.text = $"Stage : {monsterSpawner.Count + 1}";
     }
 
+    // 게임이 일시정지 되어있는 시간을 계산하여 코인에 추가
     private void OnApplicationPause(bool pause)
     {
         if(pause)
         {
-            //_backGroundTime = DateTime.Now;
+            _backGroundTime = DateTime.Now;
         }
         else
         {
-            //_foreGroundTime = DateTime.Now;
+            _foreGroundTime = DateTime.Now;
 
-            //var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
+            var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
 
-            //Coin += (int)sec;
+            coin += (int)sec;
         }
     }
 

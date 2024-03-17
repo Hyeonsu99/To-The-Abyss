@@ -25,9 +25,7 @@ public class Monster : MonoBehaviour
         {
             if(monsterSpawner.Count <= 0)
             {
-                Health = 100;
-
-                
+                Health = 100;            
             }
             else
             {
@@ -62,6 +60,8 @@ public class Monster : MonoBehaviour
     {
         if(OnDeath != null)
         {
+            GameManager.Instance.coin += (int)HpBar.maxValue;
+
             OnDeath.Invoke();
         }
 

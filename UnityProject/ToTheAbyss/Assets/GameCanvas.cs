@@ -14,14 +14,6 @@ public class GameCanvas : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    //public void OnClick(GameObject obj)
-    //{
-    //    if (obj != null && obj.activeSelf == false)
-    //    {
-    //        obj.SetActive(true);
-    //    }
-    //}
-
     public void OnShowPanel(GameObject obj)
     {
         foreach(GameObject go in Views)
@@ -125,6 +117,17 @@ public class GameCanvas : MonoBehaviour
                     }
                     break;
             }
+        }
+    }
+
+    public void UpgradePlayer()
+    {
+        if(GameManager.Instance.coin > 50)
+        {
+            GameManager.Instance.coin -= 50;
+
+            GameManager.Instance.playerDamage += 1;
+            GameManager.Instance.playerAutoDamage += 1;
         }
     }
 
