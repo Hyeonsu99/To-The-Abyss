@@ -8190,6 +8190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  Level: 0
   damage: 0
 --- !u!1 &909019193
 GameObject:
@@ -8289,6 +8290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  Level: 0
   damage: 0
 --- !u!1 &925916560
 GameObject:
@@ -8522,6 +8524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 4
+  Level: 0
   damage: 0
 --- !u!1 &955904223
 GameObject:
@@ -8829,6 +8832,11 @@ MonoBehaviour:
   StageText: {fileID: 690936645}
   monsterSpawner: {fileID: 1201623263}
   delay: 0
+  peers:
+  - {fileID: 894092177}
+  - {fileID: 1802168301}
+  - {fileID: 909019193}
+  - {fileID: 940768667}
 --- !u!4 &962288963
 Transform:
   m_ObjectHideFlags: 0
@@ -12875,6 +12883,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  Level: 0
   damage: 0
 --- !u!1 &1841185381
 GameObject:

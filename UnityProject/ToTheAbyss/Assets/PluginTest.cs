@@ -15,11 +15,22 @@ public class PluginTest : MonoBehaviour
     void Start()
     {
         var pluginClass = new AndroidJavaClass("com.example.plugin.UnityPlugin");
-
         obj = pluginClass.CallStatic<AndroidJavaObject>("instance");
+
+        var unityPlayerClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        var currentActivity = unityPlayerClass.CallStatic<AndroidJavaObject>("currentActivity");
 
         var str = obj.Call<string>("returnText");
 
         text.text = str;
+
+        obj.Call("SetContext", currentActivity);
+
+        obj.Call("StartService");
+    }
+
+    public void StartService(string msg)
+    {
+        Debug.Log(msg);
     }
 }
