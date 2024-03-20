@@ -10,9 +10,6 @@ public class GameManager : MonoBehaviour
 
     public int coin;
 
-    public int touchGold;
-    public int autoGold;
-
     public int playerDamage;
     public int playerAutoDamage;
 
@@ -58,20 +55,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadGameState();
-
-        StartCoroutine(Method());
-    }
-
-    IEnumerator Method()
-    {
-        var cointime = new WaitForSeconds(1f);
-
-        while(true)
-        {
-            yield return cointime;
-
-            coin += autoGold;           
-        }
     }
 
     private void LoadGameState()

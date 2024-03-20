@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class TouchPanel : MonoBehaviour, IPointerDownHandler
 {
 
     public void OnPointerDown(PointerEventData eventData)
@@ -11,8 +11,6 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 #if UNITY_ANDROID
         if (Input.touchCount > 0)
         {
-            GameManager.Instance.coin += GameManager.Instance.touchGold;         
-
             var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
 
             var damage = GameManager.Instance.playerDamage;
@@ -21,9 +19,4 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
 #endif
     }   
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-
-    }
 }

@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
         StartCoroutine(AutoDamage());
     }
 
+    // 자동적으로 데메지를 주는 코드
     IEnumerator AutoDamage()
     {
         yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
