@@ -126,6 +126,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            pauseDamage = 0;
+
             _foreGroundTime = DateTime.Now;
 
             var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;

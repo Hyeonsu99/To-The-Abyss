@@ -56,6 +56,34 @@ public class Monster : MonoBehaviour
         }
     }
 
+    private void OnApplicationPause(bool pause)
+    {
+        if(!pause)
+        {
+            if (GameManager.Instance.pauseDamage > 0)
+            {
+                while (GameManager.Instance.pauseDamage > 0)
+                {
+                    int damage = Mathf.Min(Health, GameManager.Instance.pauseDamage);
+                    GameManager.Instance.pauseDamage -= damage;
+
+                    Health -= damage;
+
+                    if (Health < 0)
+                    {
+                        Die();
+                    }
+                }
+            }
+        }
+    }
+
+    public void TakePauseDamage()
+    {
+
+    }
+  
+
     void Die()
     {
         if(OnDeath != null)
