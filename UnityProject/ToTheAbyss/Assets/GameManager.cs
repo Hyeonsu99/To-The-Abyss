@@ -6,23 +6,35 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    // 게임 매니저 참조를 위한 인스턴스
     private static GameManager instance = null;
 
+    // 총 코인
     public int coin;
 
+    // 플레이어 터치 공격 데미지
     public int playerDamage;
+    // 플레이어 자동 공격 데미지
     public int playerAutoDamage;
 
+    // 코인 표시용 텍스트(향후 a,b,c... 화폐 단위 변경 예정)
     public TextMeshProUGUI CoinText;
+    // 스테이지 표시용 텍스트 
     public TextMeshProUGUI StageText;
-
+    // 몬스터 스포너 스크립트
     public MonsterSpawner monsterSpawner;
 
     public float delay;
 
+    // 백그라운드로 진입한 시간 측정용 변수
     private DateTime _backGroundTime;
+    // 다시 포어그라운드로 진입한 시간 측정용 변수
     private DateTime _foreGroundTime;
 
+    // 백그라운드로 내려가 있는 동안 진행된 데미지 총량
+    public int pauseDamage;
+
+    // 동료 리스트
     [SerializeField]
     private List<GameObject> peers = new List<GameObject>();
 
@@ -105,6 +117,7 @@ public class GameManager : MonoBehaviour
     }
 
     // 게임이 일시정지 되어있는 시간을 계산하여 코인에 추가
+    // 모든 데미지도 누적시켜야 함.
     private void OnApplicationPause(bool pause)
     {
         if(pause)
@@ -117,7 +130,7 @@ public class GameManager : MonoBehaviour
 
             var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
 
-            coin += (int)sec;
+            pauseDamage += playerAutoDamage * (int)sec;
         }
     }
 

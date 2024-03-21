@@ -20,6 +20,9 @@ public class Peer : MonoBehaviour
 
     public int damage;
 
+    private System.DateTime _backGroundTime;
+    private System.DateTime _foreGroundTime;
+
 
     void Start()
     {
@@ -54,8 +57,7 @@ public class Peer : MonoBehaviour
     IEnumerator AutoDamage()
     {
         yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
-
-        var a = new WaitForSeconds(GameManager.Instance.delay);      
+    
         if(this.gameObject.activeSelf)
         {
             while (true)
@@ -89,5 +91,37 @@ public class Peer : MonoBehaviour
     {
         var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
         monster.TakeDamage(damage);
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            _backGroundTime = System.DateTime.Now;
+        }
+        else
+        {
+            _foreGroundTime = System.DateTime.Now;
+
+            var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
+
+            switch (type)
+            {
+                case PeerType.One:
+                    GameManager.Instance.pauseDamage += damage * (int)sec;
+                    break;
+                case PeerType.Two:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 2);
+                    break;
+                case PeerType.Three:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 3);
+                    break;
+                case PeerType.Four:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 4);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
