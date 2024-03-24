@@ -37,6 +37,20 @@ public class Monster : MonoBehaviour
         HpBar.maxValue = Health;
 
         HpBar.value = Health;
+
+        if (GameManager.Instance.pauseDamage > 0)
+        {
+            var damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
+
+            Health -= damage;
+
+            if (Health < 0)
+            {
+                Die();
+            }
+
+            GameManager.Instance.pauseDamage -= damage;
+        }
     }
 
     private void Update()
@@ -62,27 +76,20 @@ public class Monster : MonoBehaviour
         {
             if (GameManager.Instance.pauseDamage > 0)
             {
-                while (GameManager.Instance.pauseDamage > 0)
+                int damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
+
+                Health -= damage;
+
+                if (Health < 0)
                 {
-                    int damage = Mathf.Min(Health, GameManager.Instance.pauseDamage);
-                    GameManager.Instance.pauseDamage -= damage;
-
-                    Health -= damage;
-
-                    if (Health < 0)
-                    {
-                        Die();
-                    }
+                    Die();
                 }
+
+                GameManager.Instance.pauseDamage -= damage;
+
             }
         }
     }
-
-    public void TakePauseDamage()
-    {
-
-    }
-  
 
     void Die()
     {
