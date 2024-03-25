@@ -8,7 +8,6 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-#if UNITY_ANDROID
         if (Input.touchCount > 0)
         {
             var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
@@ -17,6 +16,5 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler
 
             monster.TakeDamage(damage);
         }
-#endif
     }   
 }

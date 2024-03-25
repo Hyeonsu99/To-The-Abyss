@@ -17,10 +17,17 @@ public class GameManager : MonoBehaviour
     // 플레이어 자동 공격 데미지
     public int playerAutoDamage;
 
+    /// <summary>
+    /// 향후 UI 매니저 등으로 전환해야 함.
+    /// </summary>
     // 코인 표시용 텍스트(향후 a,b,c... 화폐 단위 변경 예정)
     public TextMeshProUGUI CoinText;
     // 스테이지 표시용 텍스트 
     public TextMeshProUGUI StageText;
+    // 환생 코인 표시용 텍스트
+    public TextMeshProUGUI RebirthCoinText;
+
+
     // 몬스터 스포너 스크립트
     public MonsterSpawner monsterSpawner;
 
@@ -35,8 +42,10 @@ public class GameManager : MonoBehaviour
     public int pauseDamage;
 
     // 동료 리스트
-    [SerializeField]
-    private List<GameObject> peers = new List<GameObject>();
+    public List<GameObject> peers = new List<GameObject>();
+
+    // 환생 재화
+    public int RebirthCoin;
 
     private void Awake()
     {
@@ -98,6 +107,15 @@ public class GameManager : MonoBehaviour
             playerAutoDamage = PlayerPrefs.GetInt("playerDamage");
         }
 
+        if(!PlayerPrefs.HasKey("rebirthCoin"))
+        {
+            RebirthCoin = 0;
+        }
+        else
+        {
+            RebirthCoin = PlayerPrefs.GetInt("rebirthCoin");
+        }
+
         for(int i = 0; i < peers.Count; i++)
         {
             int state = PlayerPrefs.GetInt("Peer_" + i, 0);
@@ -114,6 +132,8 @@ public class GameManager : MonoBehaviour
         CoinText.text = coin.ToString();
 
         StageText.text = $"Stage : {monsterSpawner.Count + 1}";
+
+        RebirthCoinText.text = $"Soul : {RebirthCoin}";
     }
 
     // 게임이 일시정지 되어있는 시간을 계산하여 코인에 추가
@@ -152,6 +172,8 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("playerDamage", playerDamage);
         PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
+
+        PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
 
         PlayerPrefs.Save();
     }

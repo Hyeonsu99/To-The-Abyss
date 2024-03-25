@@ -149,6 +149,55 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
+    // 특정 스테이지 이상에서만 버튼의 상호작용 기능이 활성화되게 적용
+    public void Rebirth()
+    {
+        var manager = GameManager.Instance;
+
+        var monsterSpawner = manager.monsterSpawner;
+
+        var peers = manager.peers;
+
+        if (monsterSpawner.GetComponent<MonsterSpawner>().Count >= 5)
+        {
+            monsterSpawner.GetComponent<MonsterSpawner>().Count = 0;
+
+            IncreaseRebirthCoin(manager.playerAutoDamage);
+            IncreaseRebirthCoin(manager.playerDamage);
+            IncreaseRebirthCoin(manager.coin / 100);
+
+            for (int i = 0; i < peers.Count; i++)
+            {
+                var peer = peers[i].GetComponent<Peer>();
+
+                IncreaseRebirthCoin((peer != null) ? peer.Level : 0);
+            }
+
+            manager.playerAutoDamage = 5;
+            manager.playerDamage = 10;
+            manager.coin = 0;
+
+            for (int i = 0; i < peers.Count; i++)
+            {
+                var peer = peers[i].GetComponent<Peer>();
+
+                peer.Level = 1;
+            }
+
+            foreach (GameObject obj in manager.peers)
+            {
+                obj.SetActive(false);
+            }        
+        }
+    }
+
+    void IncreaseRebirthCoin(int amount)
+    {
+        var manager = GameManager.Instance;
+
+        manager.RebirthCoin += amount;
+    }
+
     // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
     public void LoadMiniGameScene()
     {
