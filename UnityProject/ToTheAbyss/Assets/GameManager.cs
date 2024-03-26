@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -27,7 +28,6 @@ public class GameManager : MonoBehaviour
     // 환생 코인 표시용 텍스트
     public TextMeshProUGUI RebirthCoinText;
 
-
     // 몬스터 스포너 스크립트
     public MonsterSpawner monsterSpawner;
 
@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     // 환생 재화
     public int RebirthCoin;
 
+    // 메인 씬 이벤트 시스템
+    public GameObject EventSystem;
+
     private void Awake()
     {
         if(null == instance)
@@ -57,6 +60,36 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnload;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("씬 로딩됨!");
+
+        if(scene.name == "MiniGameScene")
+        {
+            EventSystem.SetActive(false);
+        }
+    }
+
+    void OnSceneUnload(Scene unloadScene)
+    {
+        if (unloadScene.name == "MiniGameScene")
+        {
+            EventSystem.SetActive(true);
+        }
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnload;
     }
 
     public static GameManager Instance
