@@ -13,19 +13,23 @@ public class Player : MonoBehaviour
     // 자동적으로 데메지를 주는 코드
     IEnumerator AutoDamage()
     {
-        yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
+        var manager = GameManager.Instance;
 
-        var a = new WaitForSeconds(GameManager.Instance.delay);
+        yield return new WaitUntil(() => manager.monsterSpawner != null);
+
+        var a = new WaitForSeconds(manager.delay);
+
+        var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
+
 
         while (true)
         {
-            var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
-
-            var damage = GameManager.Instance.playerAutoDamage;
+            var damage = manager.playerAutoDamage;
 
             monster.TakeDamage(damage);
 
             yield return a;
         }
+
     }
 }
