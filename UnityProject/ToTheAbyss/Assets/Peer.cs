@@ -87,10 +87,39 @@ public class Peer : MonoBehaviour
         }
     }
 
+    IEnumerator MiniGameAutoDamage()
+    {
+        if (this.gameObject.activeSelf)
+        {
+            while (true)
+            {
+                switch (type)
+                {
+                    case PeerType.One:
+                        yield return new WaitForSeconds(1f);
+                        break;
+                    case PeerType.Two:
+                        yield return new WaitForSeconds(2f);
+                        break;
+                    case PeerType.Three:
+                        yield return new WaitForSeconds(3f);
+                        break;
+                    case PeerType.Four:
+                        yield return new WaitForSeconds(4f);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
     void Damage(int damage)
     {
-        var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
-        monster.TakeDamage(damage);
+        var monster = GameManager.Instance.monsterSpawner.currentMonster;
+
+        var mon = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
+        mon.TakeDamage(damage);     
     }
 
     private void OnApplicationPause(bool pause)

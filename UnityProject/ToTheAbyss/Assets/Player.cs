@@ -19,17 +19,17 @@ public class Player : MonoBehaviour
 
         var a = new WaitForSeconds(manager.delay);
 
-        var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
+        var monster = manager.monsterSpawner.currentMonster;
 
+        var mon = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
 
         while (true)
         {
             var damage = manager.playerAutoDamage;
 
-            monster.TakeDamage(damage);
+            mon.TakeDamage(damage);
 
             yield return a;
-        }
-
+        }      
     }
 }

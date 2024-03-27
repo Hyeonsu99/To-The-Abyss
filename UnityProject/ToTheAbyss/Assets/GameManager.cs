@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     // 환생 재화
     public int RebirthCoin;
-
+    
     // 메인 씬 이벤트 시스템
     public GameObject EventSystem;
 
@@ -70,20 +70,12 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("씬 로딩됨!");
 
-        if(scene.name == "MiniGameScene")
-        {
-            EventSystem.SetActive(false);
-        }
     }
 
     void OnSceneUnload(Scene unloadScene)
     {
-        if (unloadScene.name == "MiniGameScene")
-        {
-            EventSystem.SetActive(true);
-        }
+
     }
 
     private void OnDisable()

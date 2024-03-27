@@ -98,8 +98,8 @@ public class Monster : MonoBehaviour
             GameManager.Instance.coin += (int)HpBar.maxValue;
 
             OnDeath.Invoke();
-        }
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }                   
     }
 }
