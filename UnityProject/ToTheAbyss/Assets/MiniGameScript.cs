@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class MiniGameScript : MonoBehaviour
     public GameObject currentPuppet;
 
     public TextMeshProUGUI scoreText;
+
+    private int MiniGameTime = 10;
 
     private void OnEnable()
     {
@@ -36,6 +39,20 @@ public class MiniGameScript : MonoBehaviour
     public void sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("미니 게임 씬 로드!");
+
+        StartCoroutine(CheckMiniGametime());
+    }
+
+    IEnumerator CheckMiniGametime()
+    {
+        while(MiniGameTime > 0)
+        {
+            MiniGameTime -= 1;
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        SceneManager.UnloadSceneAsync("MiniGameScene");
     }
 
     public void UnLoadMiniGameScene()
