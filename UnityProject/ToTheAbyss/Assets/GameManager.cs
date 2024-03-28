@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     // 게임 매니저 참조를 위한 인스턴스
     private static GameManager instance = null;
 
+    // 플레이어
+    public Player player;
+
     // 총 코인
     public int coin;
 
@@ -46,12 +49,17 @@ public class GameManager : MonoBehaviour
 
     // 환생 재화
     public int RebirthCoin;
+
+    // 미니게임 데미지
+    public int MiniGamedDamage;
     
     // 메인 씬 이벤트 시스템
     public GameObject EventSystem;
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+
         if(null == instance)
         {
             instance = this;
@@ -70,12 +78,32 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if(scene.name == "MiniGameScene")
+        {
+            EventSystem.SetActive(false);
 
+            player.StartMiniGameCoroutine();
+
+            for (int i = 0; i < peers.Count; i++)
+            {
+                peers[i].GetComponent<Peer>().StartMiniCoroutine();
+            }
+        }
     }
 
     void OnSceneUnload(Scene unloadScene)
     {
+        if (unloadScene.name == "MiniGameScene")
+        {
+            EventSystem.SetActive(true);
 
+            player.StartMainCoroutine();
+
+            for (int i = 0; i < peers.Count; i++)
+            {
+                peers[i].GetComponent<Peer>().StartMainCoroutine();
+            }
+        }
     }
 
     private void OnDisable()

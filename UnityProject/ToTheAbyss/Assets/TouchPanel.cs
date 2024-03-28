@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 
 public class TouchPanel : MonoBehaviour, IPointerDownHandler
 {
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (Input.touchCount > 0)

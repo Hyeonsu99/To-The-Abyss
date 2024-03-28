@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Peer : MonoBehaviour
 {
@@ -32,6 +33,19 @@ public class Peer : MonoBehaviour
 
         StartCoroutine(AutoDamage());
     }
+
+    public void StartMainCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(AutoDamage());
+    }
+
+    public void StartMiniCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(MiniGameAutoDamage());
+    }
+
 
     public void SetDamage()
     {
@@ -96,15 +110,19 @@ public class Peer : MonoBehaviour
                 switch (type)
                 {
                     case PeerType.One:
+                        GameManager.Instance.MiniGamedDamage += damage;
                         yield return new WaitForSeconds(1f);
                         break;
                     case PeerType.Two:
+                        GameManager.Instance.MiniGamedDamage += damage;
                         yield return new WaitForSeconds(2f);
                         break;
                     case PeerType.Three:
+                        GameManager.Instance.MiniGamedDamage += damage;
                         yield return new WaitForSeconds(3f);
                         break;
                     case PeerType.Four:
+                        GameManager.Instance.MiniGamedDamage += damage;
                         yield return new WaitForSeconds(4f);
                         break;
                     default:
@@ -117,9 +135,12 @@ public class Peer : MonoBehaviour
     void Damage(int damage)
     {
         var monster = GameManager.Instance.monsterSpawner.currentMonster;
+        var mon = monster.GetComponent<Monster>();
 
-        var mon = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
-        mon.TakeDamage(damage);     
+        if(mon.enabled)
+        {
+            mon.TakeDamage(damage);
+        }     
     }
 
     private void OnApplicationPause(bool pause)

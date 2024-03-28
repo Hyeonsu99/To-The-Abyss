@@ -201,6 +201,23 @@ public class GameCanvas : MonoBehaviour
     // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
     public void LoadMiniGameScene()
     {
-        SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
+        if (!isSceneLoaded("MiniGameScene"))
+        {
+            SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
+        }
+    }
+
+    private bool isSceneLoaded(string sceneName)
+    {
+        for(int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene loadedScene = SceneManager.GetSceneAt(i);
+            if(loadedScene.name == sceneName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

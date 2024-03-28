@@ -1,13 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartCoroutine(AutoDamage());
+    }
+
+    public void StartMainCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(AutoDamage());
+    }
+
+    public void StartMiniGameCoroutine()
+    {
+        StopAllCoroutines();
+        StartCoroutine(AutoMiniDamage());
     }
 
     // 자동적으로 데메지를 주는 코드
@@ -17,19 +30,31 @@ public class Player : MonoBehaviour
 
         yield return new WaitUntil(() => manager.monsterSpawner != null);
 
-        var a = new WaitForSeconds(manager.delay);
+        var delaytime = new WaitForSeconds(manager.delay);
 
-        var monster = manager.monsterSpawner.currentMonster;
+        while(true)
+        {
+            var damage = manager.playerAutoDamage;
 
-        var mon = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
+            manager.monsterSpawner.currentMonster.GetComponent<Monster>().TakeDamage(damage);
+
+            yield return delaytime;
+        }
+    }
+
+    IEnumerator AutoMiniDamage()
+    {
+        var manager = GameManager.Instance;
+
+        var delaytime = new WaitForSeconds(manager.delay);
 
         while (true)
         {
             var damage = manager.playerAutoDamage;
 
-            mon.TakeDamage(damage);
+            GameManager.Instance.MiniGamedDamage += damage;
 
-            yield return a;
-        }      
+            yield return delaytime;
+        }
     }
 }

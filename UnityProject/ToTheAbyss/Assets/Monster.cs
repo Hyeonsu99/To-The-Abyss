@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var monsterSpawner = FindObjectOfType<MonsterSpawner>();
+        var monsterSpawner = GameManager.Instance.monsterSpawner;
 
         if (monsterSpawner != null)
         {
@@ -86,7 +86,6 @@ public class Monster : MonoBehaviour
                 }
 
                 GameManager.Instance.pauseDamage -= damage;
-
             }
         }
     }
@@ -98,8 +97,8 @@ public class Monster : MonoBehaviour
             GameManager.Instance.coin += (int)HpBar.maxValue;
 
             OnDeath.Invoke();
+        }
 
-            Destroy(gameObject);
-        }                   
+        Destroy(gameObject);
     }
 }

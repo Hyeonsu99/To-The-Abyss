@@ -8,8 +8,6 @@ public class MonsterSpawner : MonoBehaviour
 
     public GameObject currentMonster;
 
-    private List<GameObject> spawnedMonster = new List<GameObject>();
-
     public int Count;
     // Start is called before the first frame update
     private void Awake()
@@ -31,19 +29,14 @@ public class MonsterSpawner : MonoBehaviour
 
     private void SpawnMonster()
     {
-        if(spawnedMonster.Count == 0)
+        currentMonster = Instantiate(monsterPrefab, new Vector2(0, 1), Quaternion.identity);
+
+        Monster monster = currentMonster.GetComponent<Monster>();
+
+        if (monster != null)
         {
-            currentMonster = Instantiate(monsterPrefab, new Vector2(0, 1), Quaternion.identity);
-
-            spawnedMonster.Add(currentMonster);
-
-            Monster monster = currentMonster.GetComponent<Monster>();
-
-            if (monster != null)
-            {
-                monster.OnDeath += MonsterDeath;
-            }
-        }      
+            monster.OnDeath += MonsterDeath;
+        }    
     }
 
     public void Rebirth()
@@ -51,8 +44,6 @@ public class MonsterSpawner : MonoBehaviour
         if (Count >= 5)
         {
             Destroy(currentMonster);
-
-            spawnedMonster.Clear();
 
             SpawnMonster();
         }
@@ -62,8 +53,6 @@ public class MonsterSpawner : MonoBehaviour
     public void MonsterDeath()
     {
         Count++;
-
-        spawnedMonster.Clear();
 
         SpawnMonster();
     }

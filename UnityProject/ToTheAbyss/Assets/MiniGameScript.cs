@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 public class MiniGameScript : MonoBehaviour
@@ -9,6 +11,8 @@ public class MiniGameScript : MonoBehaviour
     public GameObject Puppet;
 
     public GameObject currentPuppet;
+
+    public TextMeshProUGUI scoreText;
 
     private void OnEnable()
     {
@@ -22,6 +26,11 @@ public class MiniGameScript : MonoBehaviour
         SceneManager.sceneLoaded -= sceneLoaded;
 
         Destroy(currentPuppet);
+    }
+
+    private void Update()
+    {
+        scoreText.text = GameManager.Instance.MiniGamedDamage.ToString();
     }
 
     public void sceneLoaded(Scene scene, LoadSceneMode mode)
