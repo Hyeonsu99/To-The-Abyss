@@ -7,7 +7,9 @@ using UnityEngine.Events;
 
 public class Monster : MonoBehaviour
 {
-    public int Health;
+    public int MaxHealth;
+
+    public int CurrentHealth;
 
     public UnityAction OnDeath;
 
@@ -23,99 +25,46 @@ public class Monster : MonoBehaviour
 
         if (monsterSpawner != null)
         {
-            if(monsterSpawner.Count <= 0)
+            if (monsterSpawner.Count <= 0)
             {
-                Health = 100;            
+                MaxHealth = 100;                   
             }
             else
             {
-                Health = 100 + (int)(100 * monsterSpawner.Count * 0.1f);
+                MaxHealth = 100 + (int)(100 * monsterSpawner.Count * 0.1f);
             }
+
+            if(PlayerPrefs.HasKey("CurrentBossHealth"))
+            {
+                CurrentHealth = PlayerPrefs.GetInt("CurrentBossHealth");
+            }
+            else
+            {
+                CurrentHealth = MaxHealth;
+            }                
         }
 
         HpBar.minValue = 0;
-        HpBar.maxValue = Health;
+        HpBar.maxValue = MaxHealth;
 
-        HpBar.value = Health;
-
-        if (GameManager.Instance.pauseDamage > 0)
-        {
-            var damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
-
-            Health -= damage;
-
-            if (Health < 0)
-            {
-                Die();
-            }
-
-            GameManager.Instance.pauseDamage -= damage;
-        }
+        HpBar.value = CurrentHealth;
     }
 
     private void Update()
     {
-        HpBar.value = Health;
+        HpBar.value = CurrentHealth;
 
-        HpText.text = string.Format(Health.ToString() + " / " + HpBar.maxValue);
+        HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
     }
 
     public void TakeDamage(int Damage)
     {
-        Health -= Damage;
+        CurrentHealth -= Damage;
 
-        if(Health <= 0)
+        if(CurrentHealth <= 0)
         {
             Die();
         }
-    }
-
-    private void OnApplicationPause(bool pause)
-    {
-        if(!pause)
-        {
-            if (GameManager.Instance.pauseDamage > 0)
-            {
-                int damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
-
-                Health -= damage;
-
-                if (Health < 0)
-                {
-                    Die();
-                }
-
-                GameManager.Instance.pauseDamage -= damage;
-            }
-        }
-    }
-
-    IEnumerator TakePauseDamage()
-    {
-        if(GameManager.Instance.pauseDamage > 0)
-        {
-            int damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
-
-            Health -= damage;
-
-            if (Health <= 0)
-            {
-                Die();
-            }
-
-            GameManager.Instance.pauseDamage -= damage;
-
-            if(GameManager.Instance.pauseDamage > 0)
-            {
-                StartCoroutine(TakePauseDamage());
-                yield return null;
-            }
-            else
-            {
-                yield break;
-            }          
-        }
-        yield return null;
     }
 
     void Die()
@@ -128,5 +77,10 @@ public class Monster : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("CurrentBossHealth", CurrentHealth);
     }
 }

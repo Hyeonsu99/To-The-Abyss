@@ -210,6 +210,8 @@ public class GameManager : MonoBehaviour
             peers[i].SetActive(state == 1);
         }
 
+        pauseDamage = 0;
+
         delay = 1;
     }
 
@@ -222,12 +224,35 @@ public class GameManager : MonoBehaviour
         RebirthCoinText.text = $"Soul : {RebirthCoin}";
     }
 
+    private bool coroutineRunning = false;
+
     private void OnApplicationPause(bool pause)
     {
         if(pause)
         {
             pauseDamage = 0;
         }
+        else if(!coroutineRunning)
+        {
+            StartCoroutine(TakePauseDamage());
+        }
+    }
+
+    IEnumerator TakePauseDamage()
+    {
+        coroutineRunning = true;
+
+        var monster = monsterSpawner.currentMonster.GetComponent<Monster>();
+        
+        yield return new WaitUntil(() => pauseDamage > 0);
+
+        var damage = Mathf.Min(monster.CurrentHealth, pauseDamage);
+
+        monster.CurrentHealth -= damage;
+
+        pauseDamage -= damage;
+
+        coroutineRunning = false;
     }
 
     private void OnApplicationQuit()
