@@ -315,7 +315,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -6548,7 +6548,6 @@ MonoBehaviour:
   - {fileID: 940768667}
   RebirthCoin: 0
   MiniGamedDamage: 0
-  EventSystem: {fileID: 252872146}
 --- !u!4 &962288963
 Transform:
   m_ObjectHideFlags: 0
@@ -8699,7 +8698,7 @@ Canvas:
   m_GameObject: {fileID: 1698356777}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 96858986}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
