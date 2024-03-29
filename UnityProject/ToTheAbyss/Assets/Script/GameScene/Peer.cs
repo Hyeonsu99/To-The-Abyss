@@ -160,21 +160,21 @@ public class Peer : MonoBehaviour
         {
             _foreGroundTime = System.DateTime.Now;
 
-            var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
+            var sec = _foreGroundTime - _backGroundTime;
 
             switch (type)
             {
                 case PeerType.One:
-                    GameManager.Instance.pauseDamage += damage * (int)sec;
+                    GameManager.Instance.pauseDamage += damage * (int)sec.TotalSeconds;
                     break;
                 case PeerType.Two:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 2);
+                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 2);
                     break;
                 case PeerType.Three:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 3);
+                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 3);
                     break;
                 case PeerType.Four:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 4);
+                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 4);
                     break;
                 default:
                     break;

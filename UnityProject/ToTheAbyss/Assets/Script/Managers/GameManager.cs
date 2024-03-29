@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     // 미니게임 데미지
     public int MiniGamedDamage;
+    
     #endregion
 
     #region private Value
@@ -98,6 +99,10 @@ public class GameManager : MonoBehaviour
         {
             SetLayerMask(7);
 
+            CoinText.gameObject.SetActive(false);
+            StageText.gameObject.SetActive(false);
+            RebirthCoinText.gameObject.SetActive(false);
+
             MiniGamedDamage = 0;
 
             player.StartMiniGameCoroutine();
@@ -121,6 +126,10 @@ public class GameManager : MonoBehaviour
         if (unloadScene.name == "MiniGameScene")
         {
             Everything();
+
+            CoinText.gameObject.SetActive(true);
+            StageText.gameObject.SetActive(true);
+            RebirthCoinText.gameObject.SetActive(true);
 
             player.StartMainCoroutine();
 
@@ -213,23 +222,11 @@ public class GameManager : MonoBehaviour
         RebirthCoinText.text = $"Soul : {RebirthCoin}";
     }
 
-    // 게임이 일시정지 되어있는 시간을 계산하여 코인에 추가
-    // 모든 데미지도 누적시켜야 함.
     private void OnApplicationPause(bool pause)
     {
         if(pause)
         {
-            _backGroundTime = DateTime.Now;
-        }
-        else
-        {
             pauseDamage = 0;
-
-            _foreGroundTime = DateTime.Now;
-
-            var sec = _foreGroundTime.Subtract(_backGroundTime).TotalSeconds;
-
-            pauseDamage += playerAutoDamage * (int)sec;
         }
     }
 

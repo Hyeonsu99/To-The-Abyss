@@ -90,6 +90,34 @@ public class Monster : MonoBehaviour
         }
     }
 
+    IEnumerator TakePauseDamage()
+    {
+        if(GameManager.Instance.pauseDamage > 0)
+        {
+            int damage = Mathf.Min(GameManager.Instance.pauseDamage, Health);
+
+            Health -= damage;
+
+            if (Health <= 0)
+            {
+                Die();
+            }
+
+            GameManager.Instance.pauseDamage -= damage;
+
+            if(GameManager.Instance.pauseDamage > 0)
+            {
+                StartCoroutine(TakePauseDamage());
+                yield return null;
+            }
+            else
+            {
+                yield break;
+            }          
+        }
+        yield return null;
+    }
+
     void Die()
     {
         if(OnDeath != null)
