@@ -37,6 +37,11 @@ public class Monster : MonoBehaviour
             if(PlayerPrefs.HasKey("CurrentBossHealth"))
             {
                 CurrentHealth = PlayerPrefs.GetInt("CurrentBossHealth");
+
+                HpBar.value = CurrentHealth;
+
+
+                PlayerPrefs.DeleteKey("CurrentBossHealth");
             }
             else
             {
@@ -45,9 +50,16 @@ public class Monster : MonoBehaviour
         }
 
         HpBar.minValue = 0;
-        HpBar.maxValue = MaxHealth;
+        HpBar.maxValue = MaxHealth;     
 
-        HpBar.value = CurrentHealth;
+        if(GameManager.Instance.pauseDamage > 0)
+        {
+            var damage = Mathf.Min(GameManager.Instance.pauseDamage, MaxHealth);
+
+            TakeDamage(damage);
+
+            GameManager.Instance.pauseDamage -= damage;
+        }
     }
 
     private void Update()

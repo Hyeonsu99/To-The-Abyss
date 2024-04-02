@@ -162,7 +162,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadGameState();
+        LoadGameState();   
+        
+        if(PlayerPrefs.HasKey("QuitTime"))
+        {
+            DateTime quitTime = DateTime.Parse(PlayerPrefs.GetString("QuitTime"));
+
+            TimeSpan timeSpan = DateTime.Now - quitTime;
+
+            Debug.Log($"{(int)timeSpan.TotalHours}시간 {(int)timeSpan.TotalMinutes}분 {(int)timeSpan.TotalSeconds}초 만에 접속하셨네요!!");
+        }
     }
 
     private void LoadGameState()
@@ -273,6 +282,8 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
 
         PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
+
+        PlayerPrefs.SetString("QuitTime", DateTime.Now.ToString());
 
         PlayerPrefs.Save();
     }
