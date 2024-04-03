@@ -157,8 +157,6 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneUnloaded -= OnSceneUnload;
     }
 
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -171,6 +169,13 @@ public class GameManager : MonoBehaviour
             TimeSpan timeSpan = DateTime.Now - quitTime;
 
             Debug.Log($"{(int)timeSpan.TotalHours}시간 {(int)timeSpan.TotalMinutes}분 {(int)timeSpan.TotalSeconds}초 만에 접속하셨네요!!");
+
+            if(timeSpan != null)
+            {
+                pauseDamage += (int)timeSpan.TotalSeconds * playerAutoDamage;
+
+                StartCoroutine(TakePauseDamage());
+            }
         }
     }
 
