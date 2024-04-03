@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 
             QuitTimeToRestartTime = DateTime.Now - quitTime;
 
-            Debug.Log($"{(int)QuitTimeToRestartTime.TotalHours}시간 {(int)QuitTimeToRestartTime.TotalMinutes}분 {(int)QuitTimeToRestartTime.TotalSeconds}초 만에 접속하셨네요!!");
+            Debug.Log($"{(int)QuitTimeToRestartTime.Hours}시간 {(int)QuitTimeToRestartTime.Minutes}분 {(int)QuitTimeToRestartTime.Seconds}초 만에 접속하셨네요!!");
 
             if(QuitTimeToRestartTime != null)
             {
