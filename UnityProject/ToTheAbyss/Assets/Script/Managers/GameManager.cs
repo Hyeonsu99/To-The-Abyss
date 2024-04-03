@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
 
     // 미니게임 데미지
     public int MiniGamedDamage;
+
+    public TimeSpan QuitTimeToRestartTime;
     
     #endregion
 
@@ -166,13 +168,13 @@ public class GameManager : MonoBehaviour
         {
             DateTime quitTime = DateTime.Parse(PlayerPrefs.GetString("QuitTime"));
 
-            TimeSpan timeSpan = DateTime.Now - quitTime;
+            QuitTimeToRestartTime = DateTime.Now - quitTime;
 
-            Debug.Log($"{(int)timeSpan.TotalHours}시간 {(int)timeSpan.TotalMinutes}분 {(int)timeSpan.TotalSeconds}초 만에 접속하셨네요!!");
+            Debug.Log($"{(int)QuitTimeToRestartTime.TotalHours}시간 {(int)QuitTimeToRestartTime.TotalMinutes}분 {(int)QuitTimeToRestartTime.TotalSeconds}초 만에 접속하셨네요!!");
 
-            if(timeSpan != null)
+            if(QuitTimeToRestartTime != null)
             {
-                pauseDamage += (int)timeSpan.TotalSeconds * playerAutoDamage;
+                pauseDamage += (int)QuitTimeToRestartTime.TotalSeconds * playerAutoDamage;
 
                 StartCoroutine(TakePauseDamage());
             }

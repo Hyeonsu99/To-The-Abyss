@@ -31,6 +31,29 @@ public class Peer : MonoBehaviour
 
         SetDamage();
 
+        if(GameManager.Instance.QuitTimeToRestartTime != null && gameObject.activeSelf)
+        {
+            var sec = GameManager.Instance.QuitTimeToRestartTime.TotalSeconds;
+
+            switch (type)
+            {
+                case PeerType.One:
+                    GameManager.Instance.pauseDamage += damage * (int)sec;
+                    break;
+                case PeerType.Two:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 2);
+                    break;
+                case PeerType.Three:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 3);
+                    break;
+                case PeerType.Four:
+                    GameManager.Instance.pauseDamage += damage * ((int)sec / 4);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         StartCoroutine(AutoDamage());
     }
 
