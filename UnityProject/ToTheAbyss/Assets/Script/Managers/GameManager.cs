@@ -60,7 +60,11 @@ public class GameManager : MonoBehaviour
     // 미니게임 데미지
     public int MiniGamedDamage;
 
+    // 게임 종료 후 재시작까지의 시간 계산
     public TimeSpan QuitTimeToRestartTime;
+
+    // 미니게임씬의 활성화 여부
+    public bool isMiniGameAcitve = false;
     
     #endregion
 
@@ -101,6 +105,8 @@ public class GameManager : MonoBehaviour
         {
             SetLayerMask(7);
 
+            isMiniGameAcitve = !isMiniGameAcitve;
+
             CoinText.gameObject.SetActive(false);
             StageText.gameObject.SetActive(false);
             RebirthCoinText.gameObject.SetActive(false);
@@ -128,6 +134,9 @@ public class GameManager : MonoBehaviour
         if (unloadScene.name == "MiniGameScene")
         {
             Everything();
+
+
+            isMiniGameAcitve = !isMiniGameAcitve;
 
             CoinText.gameObject.SetActive(true);
             StageText.gameObject.SetActive(true);

@@ -71,6 +71,8 @@ public class Monster : MonoBehaviour
         HpBar.value = CurrentHealth;
 
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
+
+        canvas.gameObject.SetActive(!GameManager.Instance.isMiniGameAcitve);
     }
 
     public void TakeDamage(int Damage)
