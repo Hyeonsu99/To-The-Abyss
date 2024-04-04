@@ -17,11 +17,15 @@ public class Monster : MonoBehaviour
 
     public TextMeshProUGUI HpText;
 
+    public Canvas canvas;
+
 
     // Start is called before the first frame update
     void Start()
     {
         var monsterSpawner = GameManager.Instance.monsterSpawner;
+
+        canvas.worldCamera = Camera.main;
 
         if (monsterSpawner != null)
         {
