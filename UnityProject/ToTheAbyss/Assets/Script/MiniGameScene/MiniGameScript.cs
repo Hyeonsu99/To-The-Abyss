@@ -9,14 +9,19 @@ using UnityEngine.SceneManagement;
 public class MiniGameScript : MonoBehaviour
 {
     // Start is called before the first frame update
+
+    // Public Variables
     public GameObject Puppet;
 
     public GameObject currentPuppet;
 
     public TextMeshProUGUI scoreText;
 
+    // Private Variables
     private int MiniGameTime = 10;
 
+
+    #region Mono Method
     private void OnEnable()
     {
         SceneManager.sceneLoaded += sceneLoaded;
@@ -35,15 +40,20 @@ public class MiniGameScript : MonoBehaviour
     {
         scoreText.text = GameManager.Instance.MiniGamedDamage.ToString();
     }
+    #endregion
 
-    public void sceneLoaded(Scene scene, LoadSceneMode mode)
+    // public Method
+
+    // private Method
+
+    private void sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("미니 게임 씬 로드!");
 
         StartCoroutine(CheckMiniGametime());
     }
 
-    IEnumerator CheckMiniGametime()
+    private IEnumerator CheckMiniGametime()
     {
         while(MiniGameTime > 0)
         {

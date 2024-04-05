@@ -16,8 +16,6 @@ public class Peer : MonoBehaviour
     public PeerType type;
     // Start is called before the first frame update
 
-    private PeerData data;
-
     public int Level;
 
     public int damage;
@@ -28,9 +26,14 @@ public class Peer : MonoBehaviour
 
     void Start()
     {
-        data = GameManager.Instance.peerDatas[(int)type];
-
-        Level = 1;
+        if(PlayerPrefs.HasKey($"Peer_{(int)type}_Level"))
+        {
+            Level = PlayerPrefs.GetInt($"Peer_{(int)type}_Level");
+        }
+        else
+        {
+            Level = 1;
+        }
 
         SetDamage();
 
@@ -95,9 +98,11 @@ public class Peer : MonoBehaviour
 
     IEnumerator AutoDamage()
     {
-        yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
+        var waitUntil = new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
+
+        yield return waitUntil;
     
-        if(this.gameObject.activeSelf)
+        if(gameObject.activeSelf)
         {
             while (true)
             {
@@ -201,6 +206,35 @@ public class Peer : MonoBehaviour
                     break;
                 case PeerType.Four:
                     GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 4);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void SavePrefByint(string key)
+    {
+        PlayerPrefs.SetInt(key, Level);
+    }
+
+    private void OnApplicationQuit()
+    {
+        if(gameObject.activeSelf)
+        {
+            switch (type)
+            {
+                case PeerType.One:
+                    SavePrefByint($"Peer_{(int)type}_Level");
+                    break;
+                case PeerType.Two:
+                    SavePrefByint($"Peer_{(int)type}_Level");
+                    break;
+                case PeerType.Three:
+                    SavePrefByint($"Peer_{(int)type}_Level");
+                    break;
+                case PeerType.Four:
+                    SavePrefByint($"Peer_{(int)type}_Level");
                     break;
                 default:
                     break;

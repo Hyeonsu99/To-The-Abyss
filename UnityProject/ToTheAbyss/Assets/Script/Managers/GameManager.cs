@@ -22,20 +22,33 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [Header("스크립트 참조")]
     // 플레이어
     public Player player;
+    // 몬스터 스포너 스크립트
+    public MonsterSpawner monsterSpawner;
 
+    [Header("재화 및 숫자")]
     // 총 코인
     public int coin;
-
     // 플레이어 터치 공격 데미지
     public int playerDamage;
     // 플레이어 자동 공격 데미지
     public int playerAutoDamage;
+    // 플레이어 자동공격 딜레이
+    public float delay;
+    // 백그라운드로 내려가 있는 동안 진행된 데미지 총량
+    public int pauseDamage;
+    // 환생 재화
+    public int RebirthCoin;
+    // 미니게임 데미지
+    public int MiniGamedDamage;
 
-    /// <summary>
-    /// 향후 UI 매니저 등으로 전환해야 함.
-    /// </summary>
+    [Header("데이터")]
+    // 동료 리스트
+    public List<GameObject> peers = new List<GameObject>();
+
+    [Header("UI")]
     // 코인 표시용 텍스트(향후 a,b,c... 화폐 단위 변경 예정)
     public TextMeshProUGUI CoinText;
     // 스테이지 표시용 텍스트 
@@ -43,32 +56,15 @@ public class GameManager : MonoBehaviour
     // 환생 코인 표시용 텍스트
     public TextMeshProUGUI RebirthCoinText;
 
-    // 몬스터 스포너 스크립트
-    public MonsterSpawner monsterSpawner;
-    // 플레이어 자동공격 딜레이
-    public float delay;
-
-    // 백그라운드로 내려가 있는 동안 진행된 데미지 총량
-    public int pauseDamage;
-
-    // 동료 리스트
-    public List<GameObject> peers = new List<GameObject>();
-
-    // 환생 재화
-    public int RebirthCoin;
-
-    // 미니게임 데미지
-    public int MiniGamedDamage;
-
+    [Header("기타 변수")]
     // 게임 종료 후 재시작까지의 시간 계산
     public TimeSpan QuitTimeToRestartTime;
-
     // 미니게임씬의 활성화 여부
     public bool isMiniGameAcitve = false;
 
-    // 동료들 데이터 스크립터블 오브젝트 저장
-    public PeerData[] peerDatas;
-    
+
+
+
     #endregion
 
     #region private Value

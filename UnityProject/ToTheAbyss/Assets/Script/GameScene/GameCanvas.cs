@@ -7,17 +7,23 @@ using UnityEngine.SceneManagement;
 
 public class GameCanvas : MonoBehaviour
 {
+
+    // public variables
     public List<GameObject> Views = new List<GameObject>();
 
     public bool isUp = false;
 
+    // private variables
     private GameManager manager;
 
+    // Mono Method
     private void Start()
     {
         manager = GameManager.Instance;
     }
+    //
 
+    // public Method
     public void ClearAllData()
     {
         PlayerPrefs.DeleteAll();
@@ -25,9 +31,9 @@ public class GameCanvas : MonoBehaviour
 
     public void OnShowPanel(GameObject obj)
     {
-        foreach(GameObject go in Views)
+        foreach (GameObject go in Views)
         {
-            if(go != obj)
+            if (go != obj)
             {
                 go.SetActive(false);
             }
@@ -40,7 +46,7 @@ public class GameCanvas : MonoBehaviour
 
     public void BuyPeer(GameObject obj)
     {
-        if(obj.activeInHierarchy == false)
+        if (obj.activeInHierarchy == false)
         {
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
@@ -96,7 +102,7 @@ public class GameCanvas : MonoBehaviour
     {
         var peer = obj.GetComponent<Peer>();
 
-        if(obj.activeSelf)
+        if (obj.activeSelf)
         {
             peer.Level += 1;
 
@@ -106,7 +112,7 @@ public class GameCanvas : MonoBehaviour
 
     public void UpgradePlayer()
     {
-        if(manager.coin > 50)
+        if (manager.coin > 50)
         {
             manager.coin -= 50;
 
@@ -130,7 +136,64 @@ public class GameCanvas : MonoBehaviour
         StartCoroutine(Up());
     }
 
-    void Damage(int damage)
+    // 특정 스테이지 이상에서만 버튼의 상호작용 기능이 활성화되게 적용
+    public void Rebirth()
+    {
+        var monsterSpawner = manager.monsterSpawner;
+
+        var peers = manager.peers;
+
+        if (monsterSpawner.TryGetComponent(out MonsterSpawner spawner))
+        {
+            if (spawner.Count >= 5)
+            {
+                spawner.Count = 0;
+
+                IncreaseRebirthCoin(manager.playerAutoDamage);
+                IncreaseRebirthCoin(manager.playerDamage);
+                IncreaseRebirthCoin(manager.coin / 100);
+
+                for (int i = 0; i < peers.Count; i++)
+                {
+                    if (peers[i].TryGetComponent(out Peer peer))
+                    {
+                        IncreaseRebirthCoin((peer != null) ? peer.Level : 0);
+                    }
+                }
+
+                manager.playerAutoDamage = 5;
+                manager.playerDamage = 10;
+                manager.coin = 0;
+
+                for (int i = 0; i < peers.Count; i++)
+                {
+                    if (peers[i].TryGetComponent(out Peer peer))
+                    {
+                        peer.Level = 1;
+                    }
+                }
+
+                foreach (GameObject obj in manager.peers)
+                {
+                    obj.SetActive(false);
+                }
+            }
+        }
+    }
+
+
+    // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
+    public void LoadMiniGameScene()
+    {
+        if (!isSceneLoaded("MiniGameScene"))
+        {
+            SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
+        }
+    }
+    //
+
+    // private Method
+    private void Damage(int damage)
     {
         var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
 
@@ -138,7 +201,7 @@ public class GameCanvas : MonoBehaviour
     }
 
     // 분노 : 공격력 증가 코루틴
-    IEnumerator Up()
+    private IEnumerator Up()
     {
         var duration = new WaitForSeconds(10f);
 
@@ -158,71 +221,17 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
-    // 특정 스테이지 이상에서만 버튼의 상호작용 기능이 활성화되게 적용
-    public void Rebirth()
-    {
-        var monsterSpawner = manager.monsterSpawner;
-
-        var peers = manager.peers;
-
-        if(monsterSpawner.TryGetComponent(out MonsterSpawner spawner))
-        {
-            if(spawner.Count >= 5)
-            {
-                spawner.Count = 0;
-
-                IncreaseRebirthCoin(manager.playerAutoDamage);
-                IncreaseRebirthCoin(manager.playerDamage);
-                IncreaseRebirthCoin(manager.coin / 100);
-
-                for (int i = 0; i < peers.Count; i++)
-                {
-                    if(peers[i].TryGetComponent(out Peer peer))
-                    {
-                        IncreaseRebirthCoin((peer != null) ? peer.Level : 0);
-                    }
-                }
-
-                manager.playerAutoDamage = 5;
-                manager.playerDamage = 10;
-                manager.coin = 0;
-
-                for (int i = 0; i < peers.Count; i++)
-                {
-                    if (peers[i].TryGetComponent(out Peer peer))
-                    {
-                        peer.Level = 1;
-                    }                        
-                }
-
-                foreach (GameObject obj in manager.peers)
-                {
-                    obj.SetActive(false);
-                }
-            }
-        }     
-    }
-
-    void IncreaseRebirthCoin(int amount)
+    private void IncreaseRebirthCoin(int amount)
     {
         manager.RebirthCoin += amount;
     }
 
-    // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
-    public void LoadMiniGameScene()
-    {
-        if (!isSceneLoaded("MiniGameScene"))
-        {
-            SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
-        }
-    }
-
     private bool isSceneLoaded(string sceneName)
     {
-        for(int i = 0; i < SceneManager.sceneCount; i++)
+        for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             Scene loadedScene = SceneManager.GetSceneAt(i);
-            if(loadedScene.name == sceneName)
+            if (loadedScene.name == sceneName)
             {
                 return true;
             }
@@ -230,4 +239,5 @@ public class GameCanvas : MonoBehaviour
 
         return false;
     }
+    //
 }

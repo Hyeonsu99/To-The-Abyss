@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class Monster : MonoBehaviour
 {
+    // public Variables
     public int MaxHealth;
 
     public int CurrentHealth;
@@ -19,10 +20,12 @@ public class Monster : MonoBehaviour
 
     public Canvas canvas;
 
+    // private Variables
     private GameManager manager;
 
 
 
+    // Mono Method
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +39,14 @@ public class Monster : MonoBehaviour
         {
             if (monsterSpawner.Count <= 0)
             {
-                MaxHealth = 100;                   
+                MaxHealth = 100;
             }
             else
             {
                 MaxHealth = 100 + (int)(100 * monsterSpawner.Count * 0.1f);
             }
 
-            if(PlayerPrefs.HasKey("CurrentBossHealth"))
+            if (PlayerPrefs.HasKey("CurrentBossHealth"))
             {
                 CurrentHealth = PlayerPrefs.GetInt("CurrentBossHealth");
 
@@ -55,13 +58,13 @@ public class Monster : MonoBehaviour
             else
             {
                 CurrentHealth = MaxHealth;
-            }                
+            }
         }
 
         HpBar.minValue = 0;
-        HpBar.maxValue = MaxHealth;     
+        HpBar.maxValue = MaxHealth;
 
-        if(manager.pauseDamage > 0)
+        if (manager.pauseDamage > 0)
         {
             var damage = Mathf.Min(manager.pauseDamage, MaxHealth);
 
@@ -80,30 +83,35 @@ public class Monster : MonoBehaviour
         canvas.gameObject.SetActive(!manager.isMiniGameAcitve);
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("CurrentBossHealth", CurrentHealth);
+    }
+    //
+
+    // public Method
     public void TakeDamage(int Damage)
     {
         CurrentHealth -= Damage;
 
-        if(CurrentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }
     }
+    //
 
-    void Die()
+    // private Method
+    private void Die()
     {
-        if(OnDeath != null)
+        if (OnDeath != null)
         {
-            manager.coin += (int)HpBar.maxValue;
+            GameManager.Instance.coin += (int)HpBar.maxValue;
 
             OnDeath.Invoke();
         }
 
         Destroy(gameObject);
     }
-
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.SetInt("CurrentBossHealth", CurrentHealth);
-    }
+    //
 }
