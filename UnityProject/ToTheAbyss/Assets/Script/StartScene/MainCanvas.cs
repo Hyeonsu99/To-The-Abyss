@@ -9,6 +9,6 @@ public class MainCanvas : MonoBehaviour
 
     public void OnClick()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("LoadingScene");
     }
 }

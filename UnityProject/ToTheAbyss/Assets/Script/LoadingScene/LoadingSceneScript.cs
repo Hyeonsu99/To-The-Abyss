@@ -1,18 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoadingSceneScript : MonoBehaviour
 {
+    public Text progressText;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(LoadScene());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator LoadScene()
     {
-        
+        yield return null;
+        AsyncOperation op = SceneManager.LoadSceneAsync("MainScene");
+        op.allowSceneActivation = false;
+
+        while(!op.isDone)
+        {
+            if(op.progress < 0.9f)
+            {
+                progressText.text = $"{op.progress * 100f}%";
+            }
+            else
+            {
+                var waitSeconds = new WaitForSeconds(0.2f);
+
+                progressText.text = "100%";
+
+                yield return waitSeconds;
+
+                op.allowSceneActivation = true;
+                yield break;
+            }
+        }
     }
 }
