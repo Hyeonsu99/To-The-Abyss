@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
 
     // 미니게임씬의 활성화 여부
     public bool isMiniGameAcitve = false;
+
+    // 동료들 데이터 스크립터블 오브젝트 저장
+    public PeerData[] peerDatas;
     
     #endregion
 

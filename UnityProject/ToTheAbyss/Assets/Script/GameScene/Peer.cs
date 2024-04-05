@@ -7,15 +7,16 @@ public class Peer : MonoBehaviour
 {
     public enum PeerType
     {
-        None,
-        One,
+        One = 0,
         Two,
         Three,
         Four
     }
 
-    public PeerType type = PeerType.None;
+    public PeerType type;
     // Start is called before the first frame update
+
+    private PeerData data;
 
     public int Level;
 
@@ -28,6 +29,10 @@ public class Peer : MonoBehaviour
     void Start()
     {
         Level = 1;
+
+        data = GameManager.Instance.peerDatas[(int)type];
+
+        Debug.Log(data.name);
 
         SetDamage();
 

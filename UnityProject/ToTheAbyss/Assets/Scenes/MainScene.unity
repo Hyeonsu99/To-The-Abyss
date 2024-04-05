@@ -6299,7 +6299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b91b4222f8ee0149acd1e2be2db042f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   Level: 0
   damage: 0
 --- !u!1 &909019193
@@ -6399,7 +6399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b91b4222f8ee0149acd1e2be2db042f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 3
+  type: 2
   Level: 0
   damage: 0
 --- !u!1 &940768667
@@ -6499,7 +6499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b91b4222f8ee0149acd1e2be2db042f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  type: 3
   Level: 0
   damage: 0
 --- !u!1 &962288961
@@ -6549,6 +6549,11 @@ MonoBehaviour:
   RebirthCoin: 0
   MiniGamedDamage: 0
   isMiniGameAcitve: 0
+  peerDatas:
+  - {fileID: 11400000, guid: c15b02fbd32aef14c82bf0c1c9a927be, type: 2}
+  - {fileID: 11400000, guid: 6b8bd7c8399043447984dd15938acde4, type: 2}
+  - {fileID: 11400000, guid: 44ce5d9f736170e40bb8c37c7cc6a5ab, type: 2}
+  - {fileID: 11400000, guid: 13e12f67a39b57a479dbcf2cbb7bdc75, type: 2}
 --- !u!4 &962288963
 Transform:
   m_ObjectHideFlags: 0
@@ -9660,7 +9665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b91b4222f8ee0149acd1e2be2db042f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  type: 1
   Level: 0
   damage: 0
 --- !u!1 &1824660433
