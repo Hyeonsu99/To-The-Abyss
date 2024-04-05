@@ -28,11 +28,9 @@ public class Peer : MonoBehaviour
 
     void Start()
     {
-        Level = 1;
-
         data = GameManager.Instance.peerDatas[(int)type];
 
-        Debug.Log(data.name);
+        Level = 1;
 
         SetDamage();
 

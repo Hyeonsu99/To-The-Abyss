@@ -19,11 +19,16 @@ public class Monster : MonoBehaviour
 
     public Canvas canvas;
 
+    private GameManager manager;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        var monsterSpawner = GameManager.Instance.monsterSpawner;
+        manager = GameManager.Instance;
+
+        var monsterSpawner = manager.monsterSpawner;
 
         canvas.worldCamera = Camera.main;
 
@@ -56,13 +61,13 @@ public class Monster : MonoBehaviour
         HpBar.minValue = 0;
         HpBar.maxValue = MaxHealth;     
 
-        if(GameManager.Instance.pauseDamage > 0)
+        if(manager.pauseDamage > 0)
         {
-            var damage = Mathf.Min(GameManager.Instance.pauseDamage, MaxHealth);
+            var damage = Mathf.Min(manager.pauseDamage, MaxHealth);
 
             TakeDamage(damage);
 
-            GameManager.Instance.pauseDamage -= damage;
+            manager.pauseDamage -= damage;
         }
     }
 
@@ -72,7 +77,7 @@ public class Monster : MonoBehaviour
 
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
 
-        canvas.gameObject.SetActive(!GameManager.Instance.isMiniGameAcitve);
+        canvas.gameObject.SetActive(!manager.isMiniGameAcitve);
     }
 
     public void TakeDamage(int Damage)
@@ -89,7 +94,7 @@ public class Monster : MonoBehaviour
     {
         if(OnDeath != null)
         {
-            GameManager.Instance.coin += (int)HpBar.maxValue;
+            manager.coin += (int)HpBar.maxValue;
 
             OnDeath.Invoke();
         }

@@ -39,17 +39,6 @@ public class MonsterSpawner : MonoBehaviour
         }    
     }
 
-    public void Rebirth()
-    {      
-        if (Count >= 5)
-        {
-            Destroy(currentMonster);
-
-            SpawnMonster();
-        }
-    }
-
-
     public void MonsterDeath()
     {
         Count++;

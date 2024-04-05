@@ -15,5 +15,4 @@ public class MiniGamePanel : MonoBehaviour, IPointerDownHandler
             }
         }
     }
-
 }

@@ -11,6 +11,13 @@ public class GameCanvas : MonoBehaviour
 
     public bool isUp = false;
 
+    private GameManager manager;
+
+    private void Start()
+    {
+        manager = GameManager.Instance;
+    }
+
     public void ClearAllData()
     {
         PlayerPrefs.DeleteAll();
@@ -38,9 +45,9 @@ public class GameCanvas : MonoBehaviour
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
                 case "1":
-                    if (GameManager.Instance.coin > 100)
+                    if (manager.coin > 100)
                     {
-                        GameManager.Instance.coin -= 100;
+                        manager.coin -= 100;
                         obj.SetActive(true);
                     }
                     else
@@ -49,9 +56,9 @@ public class GameCanvas : MonoBehaviour
                     }
                     break;
                 case "2":
-                    if (GameManager.Instance.coin > 200)
+                    if (manager.coin > 200)
                     {
-                        GameManager.Instance.coin -= 200;
+                        manager.coin -= 200;
                         obj.SetActive(true);
                     }
                     else
@@ -60,9 +67,9 @@ public class GameCanvas : MonoBehaviour
                     }
                     break;
                 case "3":
-                    if (GameManager.Instance.coin > 300)
+                    if (manager.coin > 300)
                     {
-                        GameManager.Instance.coin -= 300;
+                        manager.coin -= 300;
                         obj.SetActive(true);
                     }
                     else
@@ -71,9 +78,9 @@ public class GameCanvas : MonoBehaviour
                     }
                     break;
                 case "4":
-                    if (GameManager.Instance.coin > 400)
+                    if (manager.coin > 400)
                     {
-                        GameManager.Instance.coin -= 400;
+                        manager.coin -= 400;
                         obj.SetActive(true);
                     }
                     else
@@ -99,12 +106,12 @@ public class GameCanvas : MonoBehaviour
 
     public void UpgradePlayer()
     {
-        if(GameManager.Instance.coin > 50)
+        if(manager.coin > 50)
         {
-            GameManager.Instance.coin -= 50;
+            manager.coin -= 50;
 
-            GameManager.Instance.playerDamage += 1;
-            GameManager.Instance.playerAutoDamage += 1;
+            manager.playerDamage += 1;
+            manager.playerAutoDamage += 1;
         }
     }
 
@@ -112,7 +119,7 @@ public class GameCanvas : MonoBehaviour
     public void Skill1()
     {
         // 나중에 다 float 형으로 변경해야 됨
-        int damage = GameManager.Instance.playerDamage * 2;
+        int damage = manager.playerDamage * 2;
 
         Damage(damage);
     }
@@ -125,7 +132,7 @@ public class GameCanvas : MonoBehaviour
 
     void Damage(int damage)
     {
-        var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
+        var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
 
         monster.TakeDamage(damage);
     }
@@ -133,17 +140,19 @@ public class GameCanvas : MonoBehaviour
     // 분노 : 공격력 증가 코루틴
     IEnumerator Up()
     {
+        var duration = new WaitForSeconds(10f);
+
         if (!isUp)
         {
             isUp = true;
 
-            var a = GameManager.Instance.playerDamage;
+            var a = manager.playerDamage;
 
-            GameManager.Instance.playerDamage = GameManager.Instance.playerDamage * 2;
+            manager.playerDamage *= 2;
 
-            yield return new WaitForSeconds(10f);
+            yield return duration;
 
-            GameManager.Instance.playerDamage = a;
+            manager.playerDamage = a;
 
             isUp = false;
         }
@@ -152,49 +161,50 @@ public class GameCanvas : MonoBehaviour
     // 특정 스테이지 이상에서만 버튼의 상호작용 기능이 활성화되게 적용
     public void Rebirth()
     {
-        var manager = GameManager.Instance;
-
         var monsterSpawner = manager.monsterSpawner;
 
         var peers = manager.peers;
 
-        if (monsterSpawner.GetComponent<MonsterSpawner>().Count >= 5)
+        if(monsterSpawner.TryGetComponent(out MonsterSpawner spawner))
         {
-            monsterSpawner.GetComponent<MonsterSpawner>().Count = 0;
-
-            IncreaseRebirthCoin(manager.playerAutoDamage);
-            IncreaseRebirthCoin(manager.playerDamage);
-            IncreaseRebirthCoin(manager.coin / 100);
-
-            for (int i = 0; i < peers.Count; i++)
+            if(spawner.Count >= 5)
             {
-                var peer = peers[i].GetComponent<Peer>();
+                spawner.Count = 0;
 
-                IncreaseRebirthCoin((peer != null) ? peer.Level : 0);
+                IncreaseRebirthCoin(manager.playerAutoDamage);
+                IncreaseRebirthCoin(manager.playerDamage);
+                IncreaseRebirthCoin(manager.coin / 100);
+
+                for (int i = 0; i < peers.Count; i++)
+                {
+                    if(peers[i].TryGetComponent(out Peer peer))
+                    {
+                        IncreaseRebirthCoin((peer != null) ? peer.Level : 0);
+                    }
+                }
+
+                manager.playerAutoDamage = 5;
+                manager.playerDamage = 10;
+                manager.coin = 0;
+
+                for (int i = 0; i < peers.Count; i++)
+                {
+                    if (peers[i].TryGetComponent(out Peer peer))
+                    {
+                        peer.Level = 1;
+                    }                        
+                }
+
+                foreach (GameObject obj in manager.peers)
+                {
+                    obj.SetActive(false);
+                }
             }
-
-            manager.playerAutoDamage = 5;
-            manager.playerDamage = 10;
-            manager.coin = 0;
-
-            for (int i = 0; i < peers.Count; i++)
-            {
-                var peer = peers[i].GetComponent<Peer>();
-
-                peer.Level = 1;
-            }
-
-            foreach (GameObject obj in manager.peers)
-            {
-                obj.SetActive(false);
-            }        
-        }
+        }     
     }
 
     void IncreaseRebirthCoin(int amount)
     {
-        var manager = GameManager.Instance;
-
         manager.RebirthCoin += amount;
     }
 

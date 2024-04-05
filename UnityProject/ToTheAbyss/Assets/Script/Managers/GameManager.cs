@@ -122,7 +122,10 @@ public class GameManager : MonoBehaviour
             {
                 if(peers[i].activeSelf)
                 {
-                    peers[i].GetComponent<Peer>().StartMiniCoroutine();
+                    if(peers[i].TryGetComponent(out Peer peer))
+                    {
+                        peer.StartMiniCoroutine();
+                    }
                 }
                 else
                 {
@@ -151,7 +154,13 @@ public class GameManager : MonoBehaviour
             {
                 if (peers[i].activeSelf)
                 {
-                    peers[i].GetComponent<Peer>().StartMainCoroutine();
+                    if (peers[i].activeSelf)
+                    {
+                        if (peers[i].TryGetComponent(out Peer peer))
+                        {
+                            peer.StartMainCoroutine();
+                        }
+                    }
                 }
                 else
                 {
@@ -182,7 +191,7 @@ public class GameManager : MonoBehaviour
 
             QuitTimeToRestartTime = DateTime.Now - quitTime;
 
-            Debug.Log($"{(int)QuitTimeToRestartTime.Hours}시간 {(int)QuitTimeToRestartTime.Minutes}분 {(int)QuitTimeToRestartTime.Seconds}초 만에 접속하셨네요!!");
+            Debug.Log($"{QuitTimeToRestartTime.Hours}시간 {QuitTimeToRestartTime.Minutes}분 {QuitTimeToRestartTime.Seconds}초 만에 접속하셨네요!!");
 
             if(QuitTimeToRestartTime != null)
             {
@@ -271,8 +280,10 @@ public class GameManager : MonoBehaviour
         coroutineRunning = true;
 
         var monster = monsterSpawner.currentMonster.GetComponent<Monster>();
+
+        var waitUntil = new WaitUntil(() => pauseDamage > 0);
         
-        yield return new WaitUntil(() => pauseDamage > 0);
+        yield return waitUntil;
 
         var damage = Mathf.Min(monster.CurrentHealth, pauseDamage);
 
@@ -299,7 +310,6 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("playerDamage", playerDamage);
         PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
-
         PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
 
         PlayerPrefs.SetString("QuitTime", DateTime.Now.ToString());
