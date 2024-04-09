@@ -52,7 +52,6 @@ public class Monster : MonoBehaviour
 
                 HpBar.value = CurrentHealth;
 
-
                 PlayerPrefs.DeleteKey("CurrentBossHealth");
             }
             else

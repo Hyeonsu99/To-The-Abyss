@@ -11,6 +11,9 @@ public class GameCanvas : MonoBehaviour
     // public variables
     public List<GameObject> Views = new List<GameObject>();
 
+    public Button[] peerBuyBtns;
+    public Button[] peerUpgradeBtns;
+
     public bool isUp = false;
 
     // private variables
@@ -20,6 +23,17 @@ public class GameCanvas : MonoBehaviour
     private void Start()
     {
         manager = GameManager.Instance;
+    }
+
+    private void Update()
+    {
+        var cc = manager.peers.ToArray();
+
+        for(int i = 0; i < cc.Length; i++)
+        {
+            peerBuyBtns[i].interactable = !cc[i].activeSelf;
+            peerUpgradeBtns[i].interactable = cc[i].activeSelf;
+        }
     }
     //
 
@@ -46,7 +60,7 @@ public class GameCanvas : MonoBehaviour
 
     public void BuyPeer(GameObject obj)
     {
-        if (obj.activeInHierarchy == false)
+        if (obj.activeSelf == false)
         {
             switch (EventSystem.current.currentSelectedGameObject.name)
             {
@@ -147,6 +161,8 @@ public class GameCanvas : MonoBehaviour
         {
             if (spawner.Count >= 5)
             {
+                spawner.currentMonster.GetComponent<Monster>().OnDeath.Invoke();
+
                 spawner.Count = 0;
 
                 IncreaseRebirthCoin(manager.playerAutoDamage);
