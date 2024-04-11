@@ -216,8 +216,6 @@ public class GameCanvas : MonoBehaviour
     public void ShowRewardAD()
     {
         _admob.ShowAds();
-
-        GameManager.Instance.LastShowAdTime = DateTime.Now;
     }
     //
 
@@ -267,27 +265,6 @@ public class GameCanvas : MonoBehaviour
         }
 
         return false;
-    }
-
-    private bool isPossibleWatchAd()
-    {
-        if (PlayerPrefs.HasKey("LastShowAdTime"))
-        {
-            TimeSpan timeSpan = DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastShowAdTime"));
-
-            if(timeSpan.TotalMinutes > 5)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
     }
     //
 }

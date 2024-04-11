@@ -50,7 +50,14 @@ public class Monster : MonoBehaviour
             {
                 CurrentHealth = PlayerPrefs.GetInt("CurrentBossHealth");
 
-                HpBar.value = CurrentHealth;
+                if(CurrentHealth < MaxHealth)
+                {
+                    HpBar.value = CurrentHealth;
+                }
+                else
+                {
+                    HpBar.value = MaxHealth;
+                }
 
                 PlayerPrefs.DeleteKey("CurrentBossHealth");
             }
