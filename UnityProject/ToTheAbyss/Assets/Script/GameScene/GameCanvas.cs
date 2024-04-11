@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,11 @@ public class GameCanvas : MonoBehaviour
     public Button[] peerBuyBtns;
     public Button[] peerUpgradeBtns;
 
+    public Button adBtn;
+
     public bool isUp = false;
+
+    public AdMobTest _admob;
 
     // private variables
     private GameManager manager;
@@ -206,6 +211,14 @@ public class GameCanvas : MonoBehaviour
             SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
         }
     }
+
+    // 광고 시청 버튼 함수
+    public void ShowRewardAD()
+    {
+        _admob.ShowAds();
+
+        GameManager.Instance.LastShowAdTime = DateTime.Now;
+    }
     //
 
     // private Method
@@ -254,6 +267,27 @@ public class GameCanvas : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool isPossibleWatchAd()
+    {
+        if (PlayerPrefs.HasKey("LastShowAdTime"))
+        {
+            TimeSpan timeSpan = DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastShowAdTime"));
+
+            if(timeSpan.TotalMinutes > 5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
     //
 }

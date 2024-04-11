@@ -7,16 +7,13 @@ using System;
 
 public class AdMobTest : MonoBehaviour
 {
-    private RewardedAd rewardAd;
-
 #if UNITY_ANDROID
     private string _adUnitId = "ca-app-pub-3940256099942544/5224354917";
-#elif UNITY_IPHONE
-  private string _adUnitId = "ca-app-pub-3940256099942544/1712485313";
+    // IOS 테스트 ID
+    //private string _adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else
   private string _adUnitId = "unused";
 #endif
-
     private RewardedAd _rewardAd;
 
     // Start is called before the first frame update
@@ -68,7 +65,7 @@ public class AdMobTest : MonoBehaviour
 
     public void GetReward(Reward reward)
     {
-        Debug.Log("보상 수령 성공");
+        GameManager.Instance.coin += 200;    
 
         InitAds();
     }

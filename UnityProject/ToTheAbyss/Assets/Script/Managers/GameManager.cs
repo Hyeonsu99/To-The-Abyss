@@ -61,10 +61,8 @@ public class GameManager : MonoBehaviour
     public TimeSpan QuitTimeToRestartTime;
     // 미니게임씬의 활성화 여부
     public bool isMiniGameAcitve = false;
-
-
-
-
+    // 마지막 광고 시청 시간
+    public DateTime LastShowAdTime;
     #endregion
 
     #region private Value
@@ -235,6 +233,14 @@ public class GameManager : MonoBehaviour
         {
             RebirthCoin = PlayerPrefs.GetInt("rebirthCoin");
         }
+        if(!PlayerPrefs.HasKey("LastShowAdTime"))
+        {
+            LastShowAdTime = DateTime.Now;
+        }
+        else
+        {
+            LastShowAdTime = DateTime.Parse(PlayerPrefs.GetString("LastShowAdTime"));
+        }
 
         for(int i = 0; i < peers.Count; i++)
         {
@@ -309,6 +315,8 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
 
         PlayerPrefs.SetString("QuitTime", DateTime.Now.ToString());
+
+        PlayerPrefs.SetString("LastShowAdTime", LastShowAdTime.ToString());
 
         PlayerPrefs.Save();
     }
