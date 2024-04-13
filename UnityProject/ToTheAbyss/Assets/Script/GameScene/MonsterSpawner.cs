@@ -43,6 +43,8 @@ public class MonsterSpawner : MonoBehaviour
     {
         Count++;
 
+        Destroy(currentMonster);
+
         SpawnMonster();
     }
 }

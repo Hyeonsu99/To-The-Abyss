@@ -13,6 +13,19 @@ public class Peer : MonoBehaviour
         Four
     }
 
+    public enum PeerAttribute
+    {
+        None,
+        Fire,
+        Water,
+        Earth,
+        Light,
+        Dark
+    }
+
+    public PeerAttribute peerAttribute;
+
+
     public PeerType type;
     // Start is called before the first frame update
 

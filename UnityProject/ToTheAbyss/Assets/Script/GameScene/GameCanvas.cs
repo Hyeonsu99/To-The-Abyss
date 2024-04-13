@@ -165,10 +165,8 @@ public class GameCanvas : MonoBehaviour
         if (monsterSpawner.TryGetComponent(out MonsterSpawner spawner))
         {
             if (spawner.Count >= 5)
-            {
-                spawner.currentMonster.GetComponent<Monster>().OnDeath.Invoke();
-
-                spawner.Count = 0;
+            {               
+                spawner.Count = -1;
 
                 IncreaseRebirthCoin(manager.playerAutoDamage);
                 IncreaseRebirthCoin(manager.playerDamage);
@@ -198,6 +196,8 @@ public class GameCanvas : MonoBehaviour
                 {
                     obj.SetActive(false);
                 }
+
+                spawner.currentMonster.GetComponent<Monster>().OnDeath.Invoke();
             }
         }
     }

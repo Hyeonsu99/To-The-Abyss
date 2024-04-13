@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+
+
 public class Monster : MonoBehaviour
 {
     // public Variables
@@ -23,7 +25,17 @@ public class Monster : MonoBehaviour
     // private Variables
     private GameManager manager;
 
+    public enum MonsterAttribute
+    {
+        None,
+        Fire,
+        Water,
+        Earth,
+        Light,
+        Dark
+    }
 
+    public MonsterAttribute attribute;
 
     // Mono Method
     // Start is called before the first frame update
@@ -78,6 +90,8 @@ public class Monster : MonoBehaviour
 
             manager.pauseDamage -= damage;
         }
+
+        attribute = (MonsterAttribute)Random.Range(0, 6);
     }
 
     private void Update()
