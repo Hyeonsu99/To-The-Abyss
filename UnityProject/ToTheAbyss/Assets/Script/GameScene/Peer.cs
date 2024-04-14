@@ -31,7 +31,7 @@ public class Peer : MonoBehaviour
 
     public int Level;
 
-    public int damage;
+    public float damage;
 
     private System.DateTime _backGroundTime;
     private System.DateTime _foreGroundTime;
@@ -183,7 +183,7 @@ public class Peer : MonoBehaviour
         }
     }
 
-    void Damage(int damage)
+    void Damage(float damage)
     {
         var monster = GameManager.Instance.monsterSpawner.currentMonster;
         var mon = monster.GetComponent<Monster>();

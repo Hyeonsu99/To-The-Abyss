@@ -144,7 +144,7 @@ public class GameCanvas : MonoBehaviour
     public void Skill1()
     {
         // 나중에 다 float 형으로 변경해야 됨
-        int damage = manager.playerDamage * 2;
+        float damage = manager.playerDamage * 2;
 
         Damage(damage);
     }
@@ -220,7 +220,7 @@ public class GameCanvas : MonoBehaviour
     //
 
     // private Method
-    private void Damage(int damage)
+    private void Damage(float damage)
     {
         var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
 
@@ -248,9 +248,10 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
-    private void IncreaseRebirthCoin(int amount)
+    // 코인 float 형태로 바꿔야 됨
+    private void IncreaseRebirthCoin(float amount)
     {
-        manager.RebirthCoin += amount;
+        manager.RebirthCoin += (int)amount;
     }
 
     private bool isSceneLoaded(string sceneName)

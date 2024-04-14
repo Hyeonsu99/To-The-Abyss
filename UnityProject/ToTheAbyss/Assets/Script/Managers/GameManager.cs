@@ -32,17 +32,17 @@ public class GameManager : MonoBehaviour
     // 총 코인
     public int coin;
     // 플레이어 터치 공격 데미지
-    public int playerDamage;
+    public float playerDamage;
     // 플레이어 자동 공격 데미지
-    public int playerAutoDamage;
+    public float playerAutoDamage;
     // 플레이어 자동공격 딜레이
     public float delay;
     // 백그라운드로 내려가 있는 동안 진행된 데미지 총량
-    public int pauseDamage;
+    public float pauseDamage;
     // 환생 재화
     public int RebirthCoin;
     // 미니게임 데미지
-    public int MiniGamedDamage;
+    public float MiniGamedDamage;
 
     [Header("데이터")]
     // 동료 리스트
@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            coin += MiniGamedDamage;
+            coin += (int)MiniGamedDamage;
 
             MiniGamedDamage = 0;
         }
@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 
             if(QuitTimeToRestartTime != null)
             {
-                pauseDamage += (int)QuitTimeToRestartTime.TotalSeconds * playerAutoDamage;
+                pauseDamage += (float)QuitTimeToRestartTime.TotalSeconds * playerAutoDamage;
 
                 StartCoroutine(TakePauseDamage());
             }
@@ -207,20 +207,20 @@ public class GameManager : MonoBehaviour
 
         if(!PlayerPrefs.HasKey("playerDamage"))
         {
-            playerDamage = 10;
+            playerDamage = 10f;
         }
         else
         {
-            playerDamage = PlayerPrefs.GetInt("playerDamage");
+            playerDamage = PlayerPrefs.GetFloat("playerDamage");
         }
 
         if (!PlayerPrefs.HasKey("playerAutoDamage"))
         {
-            playerAutoDamage = 5;
+            playerAutoDamage = 5f;
         }
         else
         {
-            playerAutoDamage = PlayerPrefs.GetInt("playerDamage");
+            playerAutoDamage = PlayerPrefs.GetFloat("playerDamage");
         }
 
         if(!PlayerPrefs.HasKey("rebirthCoin"))
@@ -299,8 +299,8 @@ public class GameManager : MonoBehaviour
         }
 
         PlayerPrefs.SetInt("coin", coin);
-        PlayerPrefs.SetInt("playerDamage", playerDamage);
-        PlayerPrefs.SetInt("playerAutoDamage", playerAutoDamage);
+        PlayerPrefs.SetFloat("playerDamage", playerDamage);
+        PlayerPrefs.SetFloat("playerAutoDamage", playerAutoDamage);
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
         PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
 

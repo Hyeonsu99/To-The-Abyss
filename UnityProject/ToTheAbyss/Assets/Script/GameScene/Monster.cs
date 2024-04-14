@@ -10,9 +10,9 @@ using UnityEngine.Events;
 public class Monster : MonoBehaviour
 {
     // public Variables
-    public int MaxHealth;
+    public float MaxHealth;
 
-    public int CurrentHealth;
+    public float CurrentHealth;
 
     public UnityAction OnDeath;
 
@@ -64,7 +64,7 @@ public class Monster : MonoBehaviour
 
                 if(CurrentHealth < MaxHealth)
                 {
-                    HpBar.value = CurrentHealth;
+                    HpBar.value = (int)CurrentHealth;
                 }
                 else
                 {
@@ -96,8 +96,8 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        HpBar.value = CurrentHealth;
-
+        HpBar.value = (int)CurrentHealth;
+        
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
 
         canvas.gameObject.SetActive(!manager.isMiniGameAcitve);
@@ -105,12 +105,12 @@ public class Monster : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt("CurrentBossHealth", CurrentHealth);
+        PlayerPrefs.SetFloat("CurrentBossHealth", CurrentHealth);
     }
     //
 
     // public Method
-    public void TakeDamage(int Damage)
+    public void TakeDamage(float Damage)
     {
         CurrentHealth -= Damage;
 
