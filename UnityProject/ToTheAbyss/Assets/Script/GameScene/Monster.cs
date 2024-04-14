@@ -96,7 +96,7 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        HpBar.value = (int)CurrentHealth;
+        HpBar.value = Mathf.Ceil(CurrentHealth);
         
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
 

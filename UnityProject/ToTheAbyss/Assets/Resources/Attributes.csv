@@ -1,0 +1,13 @@
+﻿Attribute,Damage
+FireEarth,1.1
+FireWater,0.9
+WaterFire,1.1
+WaterEarth,0.9
+EarthWater,1.1
+EarthFire,0.9
+LightNone,1.1
+LightDark,0.9
+DarkLight,1.1
+DarkNone,0.9
+NoneDark,1.1
+NoneLight,0.9
