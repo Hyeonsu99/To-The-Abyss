@@ -25,7 +25,7 @@ public class GameCanvas : MonoBehaviour
     private GameManager manager;
 
     // Mono Method
-    private void Start()
+    private void Awake()
     {
         manager = GameManager.Instance;
     }

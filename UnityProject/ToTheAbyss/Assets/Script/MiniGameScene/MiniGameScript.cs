@@ -20,6 +20,13 @@ public class MiniGameScript : MonoBehaviour
     // Private Variables
     private int MiniGameTime = 10;
 
+    private GameManager manager;
+
+    private void Awake()
+    {
+        manager = GameManager.Instance;
+    }
+
 
     #region Mono Method
     private void OnEnable()
@@ -38,7 +45,7 @@ public class MiniGameScript : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = GameManager.Instance.MiniGamedDamage.ToString();
+        scoreText.text = manager.MiniGamedDamage.ToString();
     }
     #endregion
 

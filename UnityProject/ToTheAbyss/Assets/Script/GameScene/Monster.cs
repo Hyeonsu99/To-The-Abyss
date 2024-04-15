@@ -37,12 +37,15 @@ public class Monster : MonoBehaviour
 
     public MonsterAttribute attribute;
 
+    private void Awake()
+    {
+        manager = GameManager.Instance;
+    }
+
     // Mono Method
     // Start is called before the first frame update
     void Start()
     {
-        manager = GameManager.Instance;
-
         var monsterSpawner = manager.monsterSpawner;
 
         canvas.worldCamera = Camera.main;
@@ -60,7 +63,7 @@ public class Monster : MonoBehaviour
 
             if (PlayerPrefs.HasKey("CurrentBossHealth"))
             {
-                CurrentHealth = PlayerPrefs.GetInt("CurrentBossHealth");
+                CurrentHealth = PlayerPrefs.GetFloat("CurrentBossHealth");
 
                 if(CurrentHealth < MaxHealth)
                 {
@@ -96,7 +99,7 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        HpBar.value = Mathf.Ceil(CurrentHealth);
+        HpBar.value = Mathf.CeilToInt(CurrentHealth);
         
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
 

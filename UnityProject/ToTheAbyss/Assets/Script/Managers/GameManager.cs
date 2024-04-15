@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public Player player;
     // 몬스터 스포너 스크립트
     public MonsterSpawner monsterSpawner;
+    //
+    public AttributeTest atTest;
 
     [Header("재화 및 숫자")]
     // 총 코인

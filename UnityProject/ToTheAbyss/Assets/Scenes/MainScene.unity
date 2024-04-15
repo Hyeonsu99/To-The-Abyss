@@ -7561,6 +7561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 240660950}
   monsterSpawner: {fileID: 1201623263}
+  atTest: {fileID: 962288964}
   coin: 0
   playerDamage: 0
   playerAutoDamage: 0

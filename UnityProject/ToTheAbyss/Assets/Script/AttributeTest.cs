@@ -14,11 +14,23 @@ public class AttributeTest : MonoBehaviour
         {
             Debug.Log("Àß °¡Á®¿È");
         }
+    }
 
-        for(int i = 0; i < AttributeData.Count; i++)
+    public float GetAttributeDamage(string str1, string str2)
+    {
+        float Damage = 0f;
+
+        for (int i = 0; i < AttributeData.Count; i++)
         {
-            Debug.Log(AttributeData[i]["Damage"]);
+            if ((string)AttributeData[i]["Attribute"] == str1 + str2)
+            {
+                Damage = (float)AttributeData[i]["Damage"];
+
+                return Damage;
+            }
         }
+
+        return Damage;
     }
 
     // Start is called before the first frame update

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,8 +34,8 @@ public class Peer : MonoBehaviour
 
     public float damage;
 
-    private System.DateTime _backGroundTime;
-    private System.DateTime _foreGroundTime;
+    private DateTime _backGroundTime;
+    private DateTime _foreGroundTime;
 
 
     void Start()
@@ -188,9 +189,11 @@ public class Peer : MonoBehaviour
         var monster = GameManager.Instance.monsterSpawner.currentMonster;
         var mon = monster.GetComponent<Monster>();
 
+        float mul = GameManager.Instance.atTest.GetAttributeDamage(peerAttribute.ToString(), mon.attribute.ToString());
+
         if(mon.enabled)
         {
-            mon.TakeDamage(damage);
+            mon.TakeDamage(damage * mul);
         }     
     }
 
@@ -198,11 +201,11 @@ public class Peer : MonoBehaviour
     {
         if (pause)
         {
-            _backGroundTime = System.DateTime.Now;
+            _backGroundTime = DateTime.Now;
         }
         else
         {
-            _foreGroundTime = System.DateTime.Now;
+            _foreGroundTime = DateTime.Now;
 
             var sec = _foreGroundTime - _backGroundTime;
 
