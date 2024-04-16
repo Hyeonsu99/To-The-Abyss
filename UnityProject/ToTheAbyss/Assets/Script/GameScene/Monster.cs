@@ -37,15 +37,12 @@ public class Monster : MonoBehaviour
 
     public MonsterAttribute attribute;
 
-    private void Awake()
-    {
-        manager = GameManager.Instance;
-    }
-
     // Mono Method
     // Start is called before the first frame update
     void Start()
     {
+        manager = GameManager.Instance;
+
         var monsterSpawner = manager.monsterSpawner;
 
         canvas.worldCamera = Camera.main;

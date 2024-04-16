@@ -34,10 +34,6 @@ public class Peer : MonoBehaviour
 
     public float damage;
 
-    private DateTime _backGroundTime;
-    private DateTime _foreGroundTime;
-
-
     void Start()
     {
         if(PlayerPrefs.HasKey($"Peer_{(int)type}_Level"))
@@ -50,29 +46,6 @@ public class Peer : MonoBehaviour
         }
 
         SetDamage();
-
-        if(GameManager.Instance.QuitTimeToRestartTime != null && gameObject.activeSelf)
-        {
-            var sec = GameManager.Instance.QuitTimeToRestartTime.TotalSeconds;
-
-            switch (type)
-            {
-                case PeerType.One:
-                    GameManager.Instance.pauseDamage += damage * (int)sec;
-                    break;
-                case PeerType.Two:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 2);
-                    break;
-                case PeerType.Three:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 3);
-                    break;
-                case PeerType.Four:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec / 4);
-                    break;
-                default:
-                    break;
-            }
-        }
 
         StartCoroutine(AutoDamage());
     }
@@ -195,38 +168,6 @@ public class Peer : MonoBehaviour
         {
             mon.TakeDamage(damage * mul);
         }     
-    }
-
-    private void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            _backGroundTime = DateTime.Now;
-        }
-        else
-        {
-            _foreGroundTime = DateTime.Now;
-
-            var sec = _foreGroundTime - _backGroundTime;
-
-            switch (type)
-            {
-                case PeerType.One:
-                    GameManager.Instance.pauseDamage += damage * (int)sec.TotalSeconds;
-                    break;
-                case PeerType.Two:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 2);
-                    break;
-                case PeerType.Three:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 3);
-                    break;
-                case PeerType.Four:
-                    GameManager.Instance.pauseDamage += damage * ((int)sec.TotalSeconds / 4);
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
     private void SavePrefByint(string key)

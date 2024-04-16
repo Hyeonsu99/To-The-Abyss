@@ -191,6 +191,8 @@ public class GameManager : MonoBehaviour
             {
                 pauseDamage += (float)QuitTimeToRestartTime.TotalSeconds * playerAutoDamage;
 
+                IncreasePauseDamageByPeerDamage(QuitTimeToRestartTime);
+
                 StartCoroutine(TakePauseDamage());
             }
         }
@@ -262,10 +264,46 @@ public class GameManager : MonoBehaviour
         if(pause)
         {
             pauseDamage = 0;
+
+            _backGroundTime = DateTime.Now;
         }
         else if(!coroutineRunning)
         {
+            _foreGroundTime = DateTime.Now;
+
+            TimeSpan amount = _foreGroundTime - _backGroundTime;
+
+            pauseDamage += playerAutoDamage * (int)amount.TotalSeconds;
+
+            IncreasePauseDamageByPeerDamage(amount);
+
             StartCoroutine(TakePauseDamage());
+        }
+    }
+
+    private void IncreasePauseDamageByPeerDamage(TimeSpan amount)
+    {
+        foreach(GameObject obj in peers)
+        {
+            if (obj.TryGetComponent(out Peer peer))
+            {
+                switch (peer.type)
+                {
+                    case Peer.PeerType.One:
+                        pauseDamage += peer.damage * (int)amount.TotalSeconds;
+                        break;
+                    case Peer.PeerType.Two:
+                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 2);
+                        break;
+                    case Peer.PeerType.Three:
+                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 3);
+                        break;
+                    case Peer.PeerType.Four:
+                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 4);
+                        break;
+                }
+
+            }
         }
     }
 

@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    private DateTime backgroundTime;
-    private DateTime foregroundTime;
+    //private DateTime backgroundTime;
+    //private DateTime foregroundTime;
 
     // Start is called before the first frame update
     private void Start()
@@ -58,24 +58,6 @@ public class Player : MonoBehaviour
             GameManager.Instance.MiniGamedDamage += damage;
 
             yield return delaytime;
-        }
-    }
-
-    private void OnApplicationPause(bool pause)
-    {
-        if(pause)
-        {
-            backgroundTime = DateTime.Now;
-        }
-        else
-        {
-            foregroundTime = DateTime.Now;
-
-            TimeSpan amount = foregroundTime - backgroundTime;
-
-            var manager = GameManager.Instance;
-
-            manager.pauseDamage += manager.playerAutoDamage * (int)amount.TotalSeconds;
         }
     }
 }
