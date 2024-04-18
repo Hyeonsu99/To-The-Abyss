@@ -27,7 +27,6 @@ public class MiniGameScript : MonoBehaviour
         manager = GameManager.Instance;
     }
 
-
     #region Mono Method
     private void OnEnable()
     {
@@ -62,11 +61,13 @@ public class MiniGameScript : MonoBehaviour
 
     private IEnumerator CheckMiniGametime()
     {
+        var waitTime = new WaitForSeconds(1f);
+
         while(MiniGameTime > 0)
         {
             MiniGameTime -= 1;
 
-            yield return new WaitForSeconds(1f);
+            yield return waitTime;
         }
 
         SceneManager.UnloadSceneAsync("MiniGameScene");

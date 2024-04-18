@@ -10,7 +10,7 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler
     {
         if (Input.touchCount > 0 && !SceneManager.GetSceneByName("MiniGameScene").isLoaded)
         {
-            var monster = GameManager.Instance.monsterSpawner.currentMonster.GetComponent<Monster>();
+            var monster = GameManager.Instance.monster;
 
             var damage = GameManager.Instance.playerDamage;
 

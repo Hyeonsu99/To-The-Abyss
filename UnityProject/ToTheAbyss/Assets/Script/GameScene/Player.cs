@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     //private DateTime foregroundTime;
 
     // Start is called before the first frame update
+
     private void Start()
     {
         StartCoroutine(AutoDamage());
@@ -29,17 +30,15 @@ public class Player : MonoBehaviour
     // 자동적으로 데메지를 주는 코드
     IEnumerator AutoDamage()
     {
-        var manager = GameManager.Instance;
+        yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
 
-        yield return new WaitUntil(() => manager.monsterSpawner != null);
-
-        var delaytime = new WaitForSeconds(manager.delay);
+        var delaytime = new WaitForSeconds(GameManager.Instance.delay);
 
         while(true)
         {
-            var damage = manager.playerAutoDamage;
+            var damage = GameManager.Instance.playerAutoDamage;
 
-            manager.monsterSpawner.currentMonster.GetComponent<Monster>().TakeDamage(damage);
+            GameManager.Instance.monster.TakeDamage(damage);
 
             yield return delaytime;
         }
@@ -47,13 +46,11 @@ public class Player : MonoBehaviour
 
     IEnumerator AutoMiniDamage()
     {
-        var manager = GameManager.Instance;
-
-        var delaytime = new WaitForSeconds(manager.delay);
+        var delaytime = new WaitForSeconds(GameManager.Instance.delay);
 
         while (true)
         {
-            var damage = manager.playerAutoDamage;
+            var damage = GameManager.Instance.playerAutoDamage;
 
             GameManager.Instance.MiniGamedDamage += damage;
 

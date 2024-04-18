@@ -202,7 +202,6 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
-
     // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
     public void LoadMiniGameScene()
     {

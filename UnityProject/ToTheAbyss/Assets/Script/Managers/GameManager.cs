@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     //
     public AttributeTest atTest;
 
+    public Monster monster;
+
     [Header("재화 및 숫자")]
     // 총 코인
     public int coin;
@@ -75,6 +77,8 @@ public class GameManager : MonoBehaviour
     private DateTime _foreGroundTime;
     #endregion
 
+
+    // Mono Method
 
     private void Awake()
     {
@@ -134,7 +138,6 @@ public class GameManager : MonoBehaviour
         if (unloadScene.name == "MiniGameScene")
         {
             Everything();
-
 
             isMiniGameAcitve = !isMiniGameAcitve;
 
@@ -198,6 +201,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        CoinText.text = coin.ToString();
+
+        StageText.text = $"Stage : {monsterSpawner.Count + 1}";
+
+        RebirthCoinText.text = $"Soul : {RebirthCoin}";
+    }
+
+    // 
+    
+    // public Method
+    // 
+
+    // private Method
+
     private void LoadGameState()
     {
         if(PlayerPrefs.HasKey("coin"))
@@ -248,15 +267,6 @@ public class GameManager : MonoBehaviour
         delay = 1;
     }
 
-    private void Update()
-    {
-        CoinText.text = coin.ToString();
-
-        StageText.text = $"Stage : {monsterSpawner.Count + 1}";
-
-        RebirthCoinText.text = $"Soul : {RebirthCoin}";
-    }
-
     private bool coroutineRunning = false;
 
     private void OnApplicationPause(bool pause)
@@ -287,19 +297,20 @@ public class GameManager : MonoBehaviour
         {
             if (obj.TryGetComponent(out Peer peer))
             {
+                var damage = atTest.GetAttributeDamage(peer.type.ToString(), monsterSpawner.currentMonster.GetComponent<Monster>().attribute.ToString());
                 switch (peer.type)
-                {
+                {                  
                     case Peer.PeerType.One:
-                        pauseDamage += peer.damage * (int)amount.TotalSeconds;
+                        pauseDamage += peer.damage * damage * (int)amount.TotalSeconds;
                         break;
                     case Peer.PeerType.Two:
-                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 2);
+                        pauseDamage += peer.damage * damage * ((int)amount.TotalSeconds / 2);
                         break;
                     case Peer.PeerType.Three:
-                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 3);
+                        pauseDamage += peer.damage * damage * ((int)amount.TotalSeconds / 3);
                         break;
                     case Peer.PeerType.Four:
-                        pauseDamage += peer.damage * ((int)amount.TotalSeconds / 4);
+                        pauseDamage += peer.damage * damage * ((int)amount.TotalSeconds / 4);
                         break;
                 }
 
@@ -310,8 +321,6 @@ public class GameManager : MonoBehaviour
     IEnumerator TakePauseDamage()
     {
         coroutineRunning = true;
-
-        var monster = monsterSpawner.currentMonster.GetComponent<Monster>();
 
         var waitUntil = new WaitUntil(() => pauseDamage > 0);
         
@@ -339,10 +348,12 @@ public class GameManager : MonoBehaviour
         }
 
         PlayerPrefs.SetInt("coin", coin);
-        PlayerPrefs.SetFloat("playerDamage", playerDamage);
-        PlayerPrefs.SetFloat("playerAutoDamage", playerAutoDamage);
         PlayerPrefs.SetInt("count", monsterSpawner.Count);
         PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
+
+        PlayerPrefs.SetFloat("CurrentBossHealth", monster.CurrentHealth);
+        PlayerPrefs.SetFloat("playerDamage", playerDamage);
+        PlayerPrefs.SetFloat("playerAutoDamage", playerAutoDamage);
 
         PlayerPrefs.SetString("QuitTime", DateTime.Now.ToString());
 
@@ -358,4 +369,6 @@ public class GameManager : MonoBehaviour
     {
         Camera.main.cullingMask = -1;
     }
+    //
+
 }

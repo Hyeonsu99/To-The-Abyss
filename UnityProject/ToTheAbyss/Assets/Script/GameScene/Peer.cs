@@ -159,8 +159,7 @@ public class Peer : MonoBehaviour
 
     void Damage(float damage)
     {
-        var monster = GameManager.Instance.monsterSpawner.currentMonster;
-        var mon = monster.GetComponent<Monster>();
+        var mon = GameManager.Instance.monster;
 
         float mul = GameManager.Instance.atTest.GetAttributeDamage(peerAttribute.ToString(), mon.attribute.ToString());
 
