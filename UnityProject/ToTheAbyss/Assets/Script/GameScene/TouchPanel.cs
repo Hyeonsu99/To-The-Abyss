@@ -8,7 +8,7 @@ public class TouchPanel : MonoBehaviour, IPointerDownHandler
 {
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (Input.touchCount > 0 && !SceneManager.GetSceneByName("MiniGameScene").isLoaded)
+        if (Input.touchCount > 0 && !SceneManager.GetSceneByName(StringValue.Scene.miniGameScene).isLoaded)
         {
             var monster = GameManager.Instance.monster;
 

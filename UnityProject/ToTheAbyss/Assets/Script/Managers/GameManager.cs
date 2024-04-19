@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MiniGameScene")
+        if (scene.name == StringValue.Scene.miniGameScene)
         {
             SetLayerMask(7);
 
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
 
     void OnSceneUnload(Scene unloadScene)
     {
-        if (unloadScene.name == "MiniGameScene")
+        if (unloadScene.name == StringValue.Scene.miniGameScene)
         {
             Everything();
 

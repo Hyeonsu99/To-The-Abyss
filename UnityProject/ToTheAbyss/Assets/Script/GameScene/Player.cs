@@ -30,7 +30,9 @@ public class Player : MonoBehaviour
     // 자동적으로 데메지를 주는 코드
     IEnumerator AutoDamage()
     {
-        yield return new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
+        var waitUntil  = new WaitUntil(() => GameManager.Instance.monsterSpawner != null);
+
+        yield return waitUntil;
 
         var delaytime = new WaitForSeconds(GameManager.Instance.delay);
 

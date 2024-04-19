@@ -70,11 +70,11 @@ public class MiniGameScript : MonoBehaviour
             yield return waitTime;
         }
 
-        SceneManager.UnloadSceneAsync("MiniGameScene");
+        SceneManager.UnloadSceneAsync(StringValue.Scene.miniGameScene);
     }
 
     public void UnLoadMiniGameScene()
     {
-        SceneManager.UnloadSceneAsync("MiniGameScene");
+        SceneManager.UnloadSceneAsync(StringValue.Scene.miniGameScene);
     }
 }

@@ -197,7 +197,8 @@ public class GameCanvas : MonoBehaviour
                     obj.SetActive(false);
                 }
 
-                spawner.currentMonster.GetComponent<Monster>().OnDeath.Invoke();
+                //spawner.currentMonster.GetComponent<Monster>().OnDeath.Invoke();
+                manager.monster.OnDeath.Invoke();
             }
         }
     }
@@ -205,9 +206,9 @@ public class GameCanvas : MonoBehaviour
     // 미니게임 씬 불러올 때 이벤트 시스템 비활성화 처리 해줘야 함..
     public void LoadMiniGameScene()
     {
-        if (!isSceneLoaded("MiniGameScene"))
+        if (!isSceneLoaded(StringValue.Scene.miniGameScene))
         {
-            SceneManager.LoadSceneAsync("MiniGameScene", LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(StringValue.Scene.miniGameScene, LoadSceneMode.Additive);
         }
     }
 
@@ -221,7 +222,8 @@ public class GameCanvas : MonoBehaviour
     // private Method
     private void Damage(float damage)
     {
-        var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
+        //var monster = manager.monsterSpawner.currentMonster.GetComponent<Monster>();
+        var monster = manager.monster;
 
         monster.TakeDamage(damage);
     }
@@ -247,7 +249,6 @@ public class GameCanvas : MonoBehaviour
         }
     }
 
-    // 코인 float 형태로 바꿔야 됨
     private void IncreaseRebirthCoin(float amount)
     {
         manager.RebirthCoin += (int)amount;
