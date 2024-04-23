@@ -45,12 +45,16 @@ public class Monster : MonoBehaviour
 
         canvas.worldCamera = Camera.main;
 
+        attribute = (MonsterAttribute)Random.Range(0, 6);
+
         SetState(monsterSpawner);
+
+        TakeDamageByPauseDamage();
     }
 
     private void Update()
     {
-        HpBar.value = Mathf.CeilToInt(CurrentHealth);
+        HpBar.value = Mathf.Round(CurrentHealth);
         
         HpText.text = string.Format(CurrentHealth.ToString() + " / " + HpBar.maxValue);
 
@@ -71,13 +75,9 @@ public class Monster : MonoBehaviour
     //
 
     // private Method
+
     private void SetState(MonsterSpawner monsterSpawner)
     {
-        HpBar.minValue = 0;
-        HpBar.maxValue = MaxHealth;
-
-        attribute = (MonsterAttribute)Random.Range(0, 6);
-
         if (monsterSpawner != null)
         {
             if (monsterSpawner.Count <= 0)
@@ -108,8 +108,14 @@ public class Monster : MonoBehaviour
             {
                 CurrentHealth = MaxHealth;
             }
-        }
 
+            HpBar.minValue = 0;
+            HpBar.maxValue = MaxHealth;
+        }
+    }
+
+    private void TakeDamageByPauseDamage()
+    {
         if (GameManager.Instance.pauseDamage > 0)
         {
             var damage = Mathf.Min(GameManager.Instance.pauseDamage, MaxHealth);
@@ -119,7 +125,6 @@ public class Monster : MonoBehaviour
             GameManager.Instance.pauseDamage -= damage;
         }
     }
-
     private void Die()
     {
         if (OnDeath != null)

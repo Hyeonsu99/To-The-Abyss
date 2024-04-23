@@ -28,7 +28,7 @@ public class LoadingSceneScript : MonoBehaviour
             }
             else
             {
-                var waitSeconds = new WaitForSeconds(0.2f);
+                var waitSeconds = new WaitForSeconds(1f);
 
                 progressText.text = "100%";
 

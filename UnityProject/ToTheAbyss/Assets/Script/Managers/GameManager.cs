@@ -347,17 +347,32 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Peer_" + i, peers[i].activeSelf ? 1 : 0);
         }
 
-        PlayerPrefs.SetInt("coin", coin);
-        PlayerPrefs.SetInt("count", monsterSpawner.Count);
-        PlayerPrefs.SetInt("rebirthCoin", RebirthCoin);
+        SaveIntData("coin", coin);
+        SaveIntData("count", monsterSpawner.Count);
+        SaveIntData("rebirthCoin", RebirthCoin);
 
-        PlayerPrefs.SetFloat("CurrentBossHealth", monster.CurrentHealth);
-        PlayerPrefs.SetFloat("playerDamage", playerDamage);
-        PlayerPrefs.SetFloat("playerAutoDamage", playerAutoDamage);
+        SaveFloatData("CurrentBossHealth", monster.CurrentHealth);
+        SaveFloatData("playerDamage", playerDamage);
+        SaveFloatData("playerAutoDamage", playerAutoDamage);
 
-        PlayerPrefs.SetString("QuitTime", DateTime.Now.ToString());
+        SaveStringData("QuitTime", DateTime.Now.ToString());
 
         PlayerPrefs.Save();
+    }
+
+    private void SaveIntData(string key, int value)
+    {
+        PlayerPrefs.SetInt(key, value);
+    }
+
+    private void SaveFloatData(string key, float value)
+    {
+        PlayerPrefs.SetFloat(key, value);
+    }
+
+    private void SaveStringData(string key, string value)
+    {
+        PlayerPrefs.SetString(key, value);
     }
 
     private void SetLayerMask(int layerIndex)
