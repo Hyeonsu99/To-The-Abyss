@@ -12,7 +12,7 @@ public class AttributeTest : MonoBehaviour
 
         if(AttributeData != null)
         {
-            Debug.Log("Àß °¡Á®¿È");
+
         }
     }
 

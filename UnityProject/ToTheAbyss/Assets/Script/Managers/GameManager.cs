@@ -75,6 +75,9 @@ public class GameManager : MonoBehaviour
     private DateTime _backGroundTime;
     // 다시 포어그라운드로 진입한 시간 측정용 변수
     private DateTime _foreGroundTime;
+
+    [SerializeField]
+    private float[] coinwallet = new float[26];
     #endregion
 
 
@@ -137,7 +140,7 @@ public class GameManager : MonoBehaviour
     {
         if (unloadScene.name == StringValue.Scene.miniGameScene)
         {
-            Everything();
+            SetLayerMaskToEverything();
 
             isMiniGameAcitve = !isMiniGameAcitve;
 
@@ -203,7 +206,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        CoinText.text = coin.ToString();
+        CoinText.text = GetTheorem();
 
         StageText.text = $"Stage : {monsterSpawner.Count + 1}";
 
@@ -380,9 +383,48 @@ public class GameManager : MonoBehaviour
         Camera.main.cullingMask = ~(1 << layerIndex);
     }
 
-    private void Everything()
+    private void SetLayerMaskToEverything()
     {
         Camera.main.cullingMask = -1;
+    }
+
+    private string GetTheorem()
+    {
+        float currentCoin = coin;
+
+        int index = 0;
+        
+        for(int i = 0; i < coinwallet.Length; i++)
+        {
+            if(currentCoin >= 10000)
+            {
+                currentCoin -= 10000;
+
+                index += 1;
+
+                if(index >= coinwallet.Length)
+                {
+                    index = coinwallet.Length - 1;
+                }
+            }
+        }
+
+        coinwallet[index] = currentCoin;
+
+        char unit = (char)(97 + index);
+
+        string p;
+
+        if(coinwallet[index] == 0)
+        {
+            p = (float)(Math.Truncate(coinwallet[index] + 1) / 100) + unit.ToString();
+        }
+        else
+        {
+            p = (float)(Math.Truncate(coinwallet[index]) / 100) + unit.ToString();
+        }
+
+        return p;
     }
     //
 

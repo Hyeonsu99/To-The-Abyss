@@ -42,7 +42,6 @@ public class AdMobTest : MonoBehaviour
         if(rewardAd != null)
         {
             _rewardAd = rewardAd;
-            Debug.Log("로드 성공");
         }
         else
         {
