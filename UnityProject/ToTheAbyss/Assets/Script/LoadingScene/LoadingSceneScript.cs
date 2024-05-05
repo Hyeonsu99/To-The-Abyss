@@ -17,7 +17,7 @@ public class LoadingSceneScript : MonoBehaviour
     private IEnumerator LoadScene()
     {
         yield return null;
-        AsyncOperation op = SceneManager.LoadSceneAsync("MainScene");
+        AsyncOperation op = SceneManager.LoadSceneAsync(StringValue.Scene.gameScene);
         op.allowSceneActivation = false;
 
         while(!op.isDone)
