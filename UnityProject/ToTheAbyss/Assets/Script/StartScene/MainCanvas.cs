@@ -21,13 +21,15 @@ public class MainCanvas : MonoBehaviour, IPointerDownHandler
     private void Start()
     {
         StartCoroutine(FadeLogoText());
+
+        _starttext.gameObject.SetActive(false);
     }
 
     IEnumerator FadeLogoText()
     {
         Color color = _logotext.color;
 
-        while(_logotext.color.a < 1)
+        while(_logotext.color.a <= 1)
         {
             color.a += Time.deltaTime * 1.5f;
 
@@ -50,11 +52,21 @@ public class MainCanvas : MonoBehaviour, IPointerDownHandler
         yield return new WaitForSeconds(1f);
 
         _backgroundimg.gameObject.SetActive(false);
+
+        _starttext.gameObject.SetActive(true);
+
+        StartCoroutine(FadeInOutStartText());
     }
 
     IEnumerator FadeInOutStartText()
     {
-        yield return null;
+        while(true)
+        {
+            _starttext.text = "화면을 터치하세요";
+            yield return new WaitForSeconds(2f);
+            _starttext.text = "";
+            yield return new WaitForSeconds(2f);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
